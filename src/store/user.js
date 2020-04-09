@@ -1,5 +1,5 @@
 import {login} from '../api/user'
-import {getSessionID} from '../utils/auth'
+import {getSessionID, setSessionID} from '../utils/auth'
 import { Message } from 'element-ui'
 
 const state = {
@@ -28,6 +28,7 @@ const actions = {
                     }
                     const {data} = resData;
                     commit('SET_SESSIONID',data.sessionID);
+                    setSessionID(data.sessionID);
                     resolve()
                 }).catch(error => {
                     reject(error)
