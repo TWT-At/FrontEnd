@@ -7,3 +7,11 @@ export function login(data) {
         data
     })
 }
+
+export function getWeekly(data) {
+    return request({
+        url:'/api/GetMessage',
+        method: 'get',
+        data
+    })
+}

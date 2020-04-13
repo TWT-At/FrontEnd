@@ -1,10 +1,11 @@
-import {login} from '../api/user'
-import {getSessionID, setSessionID} from '../utils/auth'
+import {login} from '../../api/user'
+import {getSessionID,setSessionID} from '../../utils/auth'
 import { Message } from 'element-ui'
 
 const state = {
     sessionID: getSessionID(),
 }
+
 
 const mutations = {
     SET_SESSIONID:(state,id) => {
@@ -14,9 +15,9 @@ const mutations = {
 
 const actions = {
     login({commit},userInfo){
-        const {username,password} = userInfo;
+        const {student_id,password} = userInfo;
         return new Promise((resolve,reject) => {
-            login({email:username.trim(),password:password})
+            login({student_id:student_id,password:password})
                 .then(resData => {
                     if(resData.data === null){
                         Message({
@@ -26,9 +27,9 @@ const actions = {
                         });
                         reject(resData['msg'])
                     }
-                    const {data} = resData;
-                    commit('SET_SESSIONID',data.sessionID);
-                    setSessionID(data.sessionID);
+                    const {data} = resData.data;
+                    commit('SET_SESSIONID',data.session_id);
+                    setSessionID(data.session_id);
                     resolve()
                 }).catch(error => {
                     reject(error)

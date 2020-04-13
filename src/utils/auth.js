@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const sessionIDKey = 'admin-SessionID';
+const sessionIDKey = 'session';
 
 export function getSessionID(){
     return Cookies.get(sessionIDKey)
