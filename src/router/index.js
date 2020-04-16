@@ -17,7 +17,7 @@ const router = new VueRouter({
 router.beforeEach((to,from,next) =>{
   if(to.name === 'login') {
     next()
-  }else if(!store.getters.sessionID) {
+  }else if(!store.getters.token) {
     next('/login')
   }else{
     next()

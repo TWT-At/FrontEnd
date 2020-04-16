@@ -1,6 +1,6 @@
  import axios from 'axios'
  //import {message} from 'element-ui'
- import {getSessionID} from './auth'
+ import {getToken} from './auth'
  import store from '../store/index'
  import qs from 'querystring'
  //import {toError,toLogin} from '../router'
@@ -20,8 +20,8 @@ const service = axios.create({
 });
 
 service.interceptors.request.use(config =>{
-    if(store.getters.sessionID) {
-        config.headers['Token']=getSessionID();
+    if(store.getters.token) {
+        config.headers['_token']=getToken();
     }
     return config
 },error => {

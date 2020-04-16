@@ -1,15 +1,15 @@
 import {login} from '../../api/user'
-import {getSessionID,setSessionID} from '../../utils/auth'
+import {getToken,setToken} from '../../utils/auth'
 import { Message } from 'element-ui'
 
 const state = {
-    sessionID: getSessionID(),
+    token: getToken(),
 }
 
 
 const mutations = {
-    SET_SESSIONID:(state,id) => {
-        state.sessionID = id
+    SET_TOKEN:(state,id) => {
+        state.token = id
     }
 }
 
@@ -28,8 +28,8 @@ const actions = {
                         reject(resData['msg'])
                     }
                     const {data} = resData.data;
-                    commit('SET_SESSIONID',data.session_id);
-                    setSessionID(data.session_id);
+                    commit('SET_TOKEN',data._token);
+                    setToken(data._token);
                     resolve()
                 }).catch(error => {
                     reject(error)
