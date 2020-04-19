@@ -6,7 +6,8 @@
  //import {toError,toLogin} from '../router'
 
 const service = axios.create({
-    baseURL: process.env.VUE_APP_SERVER_URL,
+    baseURL:'',
+    //baseURL: process.env.VUE_APP_SERVER_URL,
     transformRequest:[(oldData,config) => {
         if(!config['content-Type']) return qs.stringify(oldData);
             switch (config['content-Type']) {
@@ -16,12 +17,13 @@ const service = axios.create({
                     return qs.stringify(oldData);
             }
     }],
-    timeout: 60000
+    timeout: 60000,
+    withCredentials:true,
 });
 
 service.interceptors.request.use(config =>{
     if(store.getters.token) {
-        config.headers['_token']=getToken();
+        config.headers['token']=getToken();
     }
     return config
 },error => {

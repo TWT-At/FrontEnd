@@ -28,8 +28,8 @@ const actions = {
                         reject(resData['msg'])
                     }
                     const {data} = resData.data;
-                    commit('SET_TOKEN',data._token);
-                    setToken(data._token);
+                    commit('SET_TOKEN',data.token);
+                    setToken(data.token);
                     resolve()
                 }).catch(error => {
                     reject(error)
