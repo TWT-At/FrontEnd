@@ -1,9 +1,9 @@
  import axios from 'axios'
- //import {message} from 'element-ui'
+ import {Message} from 'element-ui'
  import {getToken} from './auth'
  import store from '../store/index'
  import qs from 'querystring'
- //import {toError,toLogin} from '../router'
+ import {toLogin} from '../router'
 
 const service = axios.create({
     baseURL:'',
@@ -30,32 +30,33 @@ service.interceptors.request.use(config =>{
     return Promise.reject(error);
 }); 
 
-/*service.interceptors.response.use(response =>{
+service.interceptors.response.use(response =>{
     if(response.status === 200){
         if(response.request.responseType === 'blob'){
-            return response.data
+            return response
         }
         const data=response.data;
-        switch (data["code"]){
-            case "200":
-                return data;
-            case "10001":
+        window.console.log(data);
+        switch (data.error_code){
+            case 0:
+                return response;
+            case 401:
                 toLogin();
                 Message({
-                    message:'${data["msg"]},请重新登录',
+                    message:'登录过期,请重新登录',
                     type:"error",
                     duration:5000
                 });
-                return Promise.reject(data["msg"]);
-            case "201":
-                return Promise.reject(data["msg"]);
+                return Promise.reject(data["error_code"]);
+            case 1:
+                return Promise.reject(data["error_code"]);
             default:
                 Message({
-                    message: data["msg"],
+                    message: "系统发生错误",
                     type: "error",
                     duration:5000
                 });
-                return Promise.reject(data["msg"])
+                return Promise.reject(data["error_code"])
         }
     }else if(response.status === 500){
         Message({
@@ -65,6 +66,6 @@ service.interceptors.request.use(config =>{
         });
     }
 })
-*/
+
 export default service
 

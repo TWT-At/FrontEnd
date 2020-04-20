@@ -1,8 +1,8 @@
 <template>
     <el-container>
-        <el-header height="144px">
-            <img class="logo" height="62" width="72" src="../assets/logo.png">
-            <img class="at" height="36" width="46" src="../assets/at.png">
+        <el-header height="142px">
+            <img class="logo" height="62" width="72" :src="logo">
+            <img class="at" height="36" width="46" :src="at">
         </el-header>
         <el-main>
             <div class="login-main" v-loading="loading">
@@ -25,9 +25,15 @@
 </template>
 
 <script>
+import logo from '../assets/logo.png'
+import at from '../assets/at.png'
+
 export default {
+    name: "login",
     data(){
         return{
+            logo,
+            at,
             loading:false,
             form:{
                 student_id:'',
