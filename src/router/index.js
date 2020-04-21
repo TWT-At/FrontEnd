@@ -12,7 +12,10 @@ Vue.use(VueRouter)
     {name:'main' ,path:'/main',component:() => import('../components/main'),
       children:[
         {
-          name:'home',path:'home',component:() => import('../components/home.vue')
+          name:'home',path:'home',component:() => import('../components/home')
+        },
+        {
+          name:'messagePage',path:'messagePage',component:() => import('../components/messagePage')
         }
       ]},
 ]

@@ -3,12 +3,13 @@
         <cloud-header></cloud-header>
         <el-container>
             <el-aside width="240px">
+                <div @mouseover="showNav()" @mouseleave="invisyNav()" class="el-menu-box">
                 <el-menu :default-active="defaultUrl" class="el-menu" :collapse="isCollapse" :router="true">
                     <el-menu-item index="/main/home">
                         <img class="my-icon" :src="home">
                         <span class="menu-title">首页</span>
                     </el-menu-item>
-                    <el-menu-item index="2">
+                    <el-menu-item index="/main/messagePage">
                         <img :src="message" class="my-icon">
                         <span class="menu-title">消息</span>
                     </el-menu-item>
@@ -45,6 +46,7 @@
                         <span class="menu-title">登出</span>
                     </el-menu-item>
                 </el-menu>
+                </div>
             </el-aside>
             <el-main>
                 <button @click="click"></button>
@@ -95,11 +97,17 @@ export default {
             },
         click(){
             this.isCollapse=false;
+        },
+        showNav(){
+            this.isCollapse=false;
+        },
+        invisyNav(){
+            this.isCollapse=true;
         }
     },
     mounted() {
             let href = window.location.href
-            this.defaultUrl = href.split('/?#')[1]
+            this.defaultUrl = href.split('/#')[1]
         },
         watch: {
             '$route': 'getPath'
@@ -112,8 +120,25 @@ export default {
 
 <style scoped>
 
+    .el-menu-box{
+        height: 100%;
+    }
+
+    .is-active >>> img {
+        -webkit-filter:brightness(100);
+        filter: brightness(100);
+    }
+
+    .el-menu-item:hover{
+        background-color: #CCD1D6;
+    }
+
+    .is-active >>> .menu-title{
+        color: #FCFEFF!important;
+    }
+
     .is-active{
-        background-color: #000000;
+        background-color: #3B4C5D!important;
     }
 
     .menu-title{
@@ -139,6 +164,10 @@ export default {
         flex-direction: row;
         justify-content:start;
         align-items:center;
+    }
+
+    .el-menu{
+        box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
     }
 
     .el-menu--collapse{
