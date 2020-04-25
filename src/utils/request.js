@@ -36,7 +36,6 @@ service.interceptors.response.use(response =>{
             return response
         }
         const data=response.data;
-        window.console.log(data);
         switch (data.error_code){
             case 0:
                 return response;

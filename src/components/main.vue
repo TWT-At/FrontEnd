@@ -49,7 +49,6 @@
                 </div>
             </el-aside>
             <el-main>
-                <button @click="click"></button>
                 <router-view/>
             </el-main>
         </el-container>
@@ -107,7 +106,7 @@ export default {
     },
     mounted() {
             let href = window.location.href
-            this.defaultUrl = href.split('/#')[1]
+            this.defaultUrl = href.split('#')[1]
         },
         watch: {
             '$route': 'getPath'
