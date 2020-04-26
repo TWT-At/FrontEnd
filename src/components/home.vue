@@ -22,7 +22,7 @@
         </div>
         <div class="weekly-box">
           <div class="weekly-title-box">
-            <img :src="weekly" class="weekly-title-logo">
+            <img :src="weekly2x" class="weekly-title-logo">
             <div class="title-word">周报状态</div>
           </div>
           <div class="weekly-main">
@@ -42,8 +42,40 @@
           <div class="message-num" v-if="messageNum">{{messageNum}}</div>
         </div>
         <div class="message-main">
-
+            <div class="message-big">
+              <div class="message-div">
+                <div class="message-big-title"><el-checkbox v-model="messageBig.checked"></el-checkbox>【{{messageBig.type}}】{{messageBig.title}}</div>
+                <div class="message-big-content">{{messageBig.content}}</div>
+              </div>
+              <div class="time-div">{{messageBig.time}}</div>
+            </div>
+            <div class="messages" v-for="(message,i) in messages" :key="i">
+              <div class="messages-title"><el-checkbox v-model="message.checked"></el-checkbox>【{{message.type}}】{{message.title}}</div>
+              <div class="messages-time">{{message.time}}</div>
+            </div>
         </div>
+      </div>
+    </div>
+    <div class="second-line-box">
+      <div class="proj-title-box">
+        <img class="proj-logo" :src="project2x">
+         <div class="title-word">我的项目</div>
+         <div class="proj-nun">共有{{projNum.doing}}个项目在进行中，已完结{{projNum.done}}个项目</div>
+      </div>
+      <div class="proj-main">
+
+      </div>
+    </div>
+    <div class="third-line-box">
+      <div class="group-title-box">
+        <img class="group-logo" :src="member2x">
+         <div class="title-word">有人吗</div>
+         <div class="group-num">当前共{{group.total}}人在线，本组共有{{group.myGroup}}人在线</div>
+      </div>
+      <div class="group-main">
+        <button class="who-button group-button">他们都是谁？</button>
+        <button class="cons-button group-button">工作室成员情况</button>
+        <button class="mac-button group-button">管理我的Mac地址</button>
       </div>
     </div>
   </div>
@@ -52,6 +84,8 @@
 import head from '../assets/vue.png'
 import message2x from '../assets/message2x.png'
 import weekly2x from '../assets/weekly2x.png'
+import project2x from '../assets/project2x.png'
+import member2x from '../assets/member2x.png'
 
 export default {
   name: "home",
@@ -59,14 +93,185 @@ export default {
     return {
       head,
       message2x,
+      project2x,
       weekly2x,
+      member2x,
       userInfo:this.$store.getters.userInfo,
       messageNum:1,
+      messageBig:{
+        type:"通知公告",
+        title:"天外天内部比赛开始啦",
+        content:"发公告的人很懒，什么也没有留下",
+        checked:false,
+        time:"15min前"
+      },
+      messages:[
+        {
+          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
+        },{
+          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
+        },{
+          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
+        },{
+          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
+        }],
+        projNum:{
+          doing:3,
+          done:3,
+        },
+        group:{
+          total:10,
+          myGroup:2,
+        }
     };
   }
 };
 </script>
 <style scoped>
+
+  .group-button:hover,.group-button:focus{
+    cursor: pointer;
+    background-color: #CCD1D6;
+  }
+
+  .group-button{
+    outline: none;
+    border:none;
+    background:rgba(252,254,255,1);
+    box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
+    border-radius:20px;
+    width:326px;
+    height:56px;
+  }
+
+  .group-main{
+    height: 56px;
+    width: 1148px;
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 22px 0px 100px 0px;
+  }
+
+  .group-num{
+    font-size:16px;
+    font-family:Microsoft YaHei;
+    font-weight:400;
+    color:rgba(51,52,53,1);
+    margin-left: 18px;
+  }
+
+  .group-logo{
+    width: 50px;
+    height: 56px;
+    margin-right: 38px;
+  }
+
+  .group-title-box{
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    flex-direction:row;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  .third-line-box{
+    margin-top: 36px;
+    width: 1148px;
+  }
+
+  .proj-main{
+    width:1148px;
+    min-height:218px;
+    background:rgba(252,254,255,1);
+    box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
+    border-radius:20px;
+    margin-top: 18px;
+  }
+
+  .proj-nun{
+    margin-left: 22px;
+    font-size:16px;
+    font-family:Microsoft YaHei;
+    font-weight:400;
+    color:rgba(51,52,53,1);
+  }
+
+  .second-line-box{
+    margin-top: 36px;
+    width: 1148px;
+  }
+
+  .proj-logo{
+    height: 60px;
+    width: 60px;
+    margin-right: 34px;
+  }
+
+  .proj-title-box{
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    flex-direction:row;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  .messages{
+    margin-left: 42px;
+    margin-bottom: 8px;
+    font-size:14px;
+    font-family:Microsoft YaHei;
+    font-weight:400;
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 446px;
+  }
+
+  .message-big-content{
+    width: 360px;
+    text-align: left;
+    margin-left: 24px;
+  }
+
+  .message-big-title >>> .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,
+  .messages-title >>> .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner
+  {
+    background-color: #70B603;
+    border-color: #70B603;
+  }
+
+  .message-big-title >>> .el-checkbox__inner,.messages-title >>> .el-checkbox__inner{
+    border-color: #f00;
+    border-radius: 50%;
+  }
+
+  .message-big-title{
+    font-size:18px;
+    font-family:Microsoft YaHei;
+    font-weight:bold;
+    color:rgba(0,0,0,1);
+    display: -webkit-flex; /* Safari */
+    flex-direction:row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .message-big{
+    width: 446px;
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 26px;
+    margin-left: 42px;
+    margin-bottom: 12px;
+  }
 
   .message-main{
     height:474px;
@@ -74,6 +279,11 @@ export default {
     box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
     border-radius:20px;
     margin-top: 24px;
+    display: flex;
+    display: -webkit-flex; /* Safari */
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
   .message-num{
@@ -303,14 +513,12 @@ export default {
     flex-direction:row;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: #0f0c;
   }
 
   .main-box{
     min-height: 1000px;
     width: 1148px;
     margin: 76px auto 0px 24px;
-    background-color: blue;
     display: -webkit-flex; /* Safari */
     display: flex;
     flex-direction:column;

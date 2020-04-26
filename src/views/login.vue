@@ -91,15 +91,18 @@ export default {
     }
 
     .login-button{
-        height: 36px;
-        width: 126px;
-        background: linear-gradient(145deg, #f9ffff, #d2d7da);
-        color: #000;
         border: 0;
         outline: none;
-        border-radius: 18px;
-        box-shadow:  7px 7px 10px #d4d9dc, 
-             -7px -7px 10px #feffff;
+        width:124px;
+        height:34px;
+        background:rgba(59,76,93,1);
+        box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1), 3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px -3px 5px 0px rgba(0, 0, 0, 0.1);
+        border-radius:17px;
+        font-size:18px;
+        font-family:Microsoft YaHei;
+        font-weight:bold;
+        color:rgba(252,254,255,1);
+        line-height:24px;
     }
 
     .form-container >>> .el-input__inner{
@@ -119,14 +122,11 @@ export default {
     }
 
     .login-main{
-        width: 440px;
-        height: 310px;
-        background: #fff;
         margin: 128px auto 0px auto;
-        border-radius:50px;
-        background: #E9EFF2;
-        box-shadow:  16px 16px 32px #d4d9dc, 
-             -16px -16px 32px #feffff;
+        width:422px;
+        height:292px;
+        background:rgba(252,254,255,1);
+        border-radius:20px;
 
     }
 
