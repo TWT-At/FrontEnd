@@ -1,4 +1,5 @@
 import {login} from '../../api/user'
+import {getInfo} from '../../api/user'
 import {getToken,setToken} from '../../utils/auth'
 import { Message } from 'element-ui'
 
@@ -34,22 +35,24 @@ const actions = {
                     const {data} = resData.data;
                     commit('SET_TOKEN',data.token);
                     setToken(data.token);
-                    let obj = {
-                        name:data.name,
-                        group:data.group,
-                        student_id:data.student_id,
-                        date:data.date,
-                        permission:data.permission,
-                        group_role:data.group_role,
-                        hour:data.hour,
-                    };
-                    commit('SET_USERINFO',obj);
                     resolve()
                 }).catch(error => {
                     reject(error)
                 })
         })
-    }
+    },
+    getInfo({commit}) {
+        return new Promise((resolve, reject) => {
+            getInfo().then(response => {
+                const {data} = response.data;
+                commit('SET_USERINFO', data);
+                resolve(data)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+
 }
 
 export default {

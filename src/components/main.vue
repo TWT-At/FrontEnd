@@ -92,7 +92,15 @@ export default {
     },
     methods: {
         getPath() {
-                this.defaultUrl = this.$route.path
+                let href = window.location.href
+                //this.defaultUrl = href.split('#')[1]
+                switch (href.split('#')[1]){
+                case "/main/userDetail" : 
+                    this.defaultUrl="/main/home";
+                    break;
+                default:
+                    this.defaultUrl=href.split('#')[1];
+                }
             },
         click(){
             this.isCollapse=false;
@@ -106,7 +114,14 @@ export default {
     },
     mounted() {
             let href = window.location.href
-            this.defaultUrl = href.split('#')[1]
+            //this.defaultUrl = href.split('#')[1]
+            switch (href.split('#')[1]){
+                case "/main/userDetail" : 
+                    this.defaultUrl="/main/home";
+                    break;
+                default:
+                    this.defaultUrl=href.split('#')[1];
+            }
         },
         watch: {
             '$route': 'getPath'

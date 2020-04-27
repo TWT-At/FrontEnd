@@ -16,6 +16,9 @@ Vue.use(VueRouter)
         },
         {
           name:'messagePage',path:'messagePage',component:() => import('../components/messagePage')
+        },
+        {
+          name:'userDetail',path:'userDetail',component:() => import('../components/userDetail')
         }
       ]},
 ]
@@ -29,6 +32,11 @@ router.beforeEach((to,from,next) =>{
     next()
   }else if(!store.getters.token) {
     next('/login')
+  }else if (!store.getters.userInfo) {
+    store.dispatch('user/getInfo').then(() => {
+        next()
+    }).catch(() => {
+    })
   }else{
     next()
   }

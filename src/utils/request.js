@@ -9,9 +9,11 @@ const service = axios.create({
     baseURL:'',
     //baseURL: process.env.VUE_APP_SERVER_URL,
     transformRequest:[(oldData,config) => {
-        if(!config['content-Type']) return qs.stringify(oldData);
-            switch (config['content-Type']) {
-                case 'multipart/form-data;charset=utf-8':
+        if(!config["Content-Type"]) {
+            return qs.stringify(oldData);
+        }
+            switch (config["Content-Type"]) {
+                case "multipart/form-data":
                     return oldData;
                 default:
                     return qs.stringify(oldData);
@@ -32,7 +34,9 @@ service.interceptors.request.use(config =>{
 
 service.interceptors.response.use(response =>{
     if(response.status === 200){
-        if(response.request.responseType === 'blob'){
+        if(response.request.responseType ===  'blob'){
+            return response
+        }else if(response.request.responseType ===  'arraybuffer'){
             return response
         }
         const data=response.data;
@@ -57,9 +61,9 @@ service.interceptors.response.use(response =>{
                 });
                 return Promise.reject(data["error_code"])
         }
-    }else if(response.status === 500){
+    }else if(response.status == 500){
         Message({
-            message: "系统错误，请联系管理员修复",
+            message: "管理员错误，请联系系统修复",
             type: "error",
             duration:5000
         });

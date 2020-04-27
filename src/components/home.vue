@@ -15,7 +15,7 @@
               <div class="info-div-first">本周工作时常<span class="info-span-bold">9999</span>小时</div>
               <div class="info-div-second info-div-second-top">账号：
                 <span class="info-span-second">{{userInfo.name}}</span>
-                <button class="change-userInfo-button">密码修改及信息维护>></button>
+                <button class="change-userInfo-button" @click="toUserDetail">密码修改及信息维护>></button>
               </div>
               <div class="info-div-second">组别：<span class="info-span-second">{{userInfo.group}}</span></div>
             </div>
@@ -124,6 +124,11 @@ export default {
           myGroup:2,
         }
     };
+  },
+  methods:{
+      toUserDetail(){
+          this.$router.push('/main/userDetail')
+      }
   }
 };
 </script>

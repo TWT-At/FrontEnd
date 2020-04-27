@@ -15,3 +15,27 @@ export function getWeekly(data) {
         data
     })
 }
+
+export function getInfo(){
+    return request({
+        url:'/api/getinfo',
+        method: 'get',
+    })
+}
+
+export function getHead(){
+    return request({
+        url:'/api/user/GetAvatar',
+        method: 'get',
+        responseType: 'arraybuffer',
+    })
+}
+
+export function uploadHead(data){
+    return request({
+        url:'/api/user/UpdateImage',
+        method: 'post',
+        headers: {'Content-Type': 'multipart/form-data'},
+        data
+    })
+}
