@@ -81,6 +81,7 @@
   </div>
 </template>
 <script>
+import {getHead} from '../api/user'
 import head from '../assets/vue.png'
 import message2x from '../assets/message2x.png'
 import weekly2x from '../assets/weekly2x.png'
@@ -129,6 +130,16 @@ export default {
       toUserDetail(){
           this.$router.push('/main/userDetail')
       }
+  },
+  mounted(){
+    getHead().then(res => {
+            return 'data:image/png;base64,' + btoa(
+                new Uint8Array(res.data)
+                  .reduce((data, byte) => data + String.fromCharCode(byte), '')
+            );
+        }).then(data => {
+            this.head=data;
+        })
   }
 };
 </script>
@@ -323,6 +334,7 @@ export default {
 
   .write-weekly-button:hover{
     cursor: pointer;
+    text-decoration: underline;
   }
 
   .write-weekly-button{
@@ -406,6 +418,7 @@ export default {
 
   .change-userInfo-button:hover{
     cursor: pointer;
+    text-decoration: underline;
   }
 
   .change-userInfo-button{
