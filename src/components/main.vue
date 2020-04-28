@@ -98,6 +98,9 @@ export default {
                 case "/main/userDetail" : 
                     this.defaultUrl="/main/home";
                     break;
+                case "/main/grouper" :
+                    this.defaultUrl="/main/home";
+                    break;
                 default:
                     this.defaultUrl=href.split('#')[1];
                 }
@@ -113,7 +116,7 @@ export default {
         }
     },
     mounted() {
-            let href = window.location.href
+            /*let href = window.location.href
             //this.defaultUrl = href.split('#')[1]
             switch (href.split('#')[1]){
                 case "/main/userDetail" : 
@@ -121,7 +124,8 @@ export default {
                     break;
                 default:
                     this.defaultUrl=href.split('#')[1];
-            }
+            }*/
+            this.getPath()
         },
         watch: {
             '$route': 'getPath'

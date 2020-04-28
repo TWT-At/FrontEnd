@@ -19,6 +19,9 @@ Vue.use(VueRouter)
         },
         {
           name:'userDetail',path:'userDetail',component:() => import('../components/userDetail')
+        },
+        {
+          name:'grouper',path:'grouper',component:() => import('../components/grouper')
         }
       ]},
 ]

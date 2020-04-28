@@ -74,7 +74,7 @@
       </div>
       <div class="group-main">
         <button class="who-button group-button">他们都是谁？</button>
-        <button class="cons-button group-button">工作室成员情况</button>
+        <button class="cons-button group-button" @click="toGrouper">工作室成员情况</button>
         <button class="mac-button group-button">管理我的Mac地址</button>
       </div>
     </div>
@@ -127,6 +127,9 @@ export default {
     };
   },
   methods:{
+      toGrouper(){
+          this.$router.push('/main/grouper')
+      },
       toUserDetail(){
           this.$router.push('/main/userDetail')
       }
