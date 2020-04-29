@@ -47,3 +47,10 @@ export function changePassword(data){
         data
     })
 }
+
+export function getGrouper(group){
+    return request({
+        url:'/api/user/Get'+group,
+        method: 'get',
+    })
+}

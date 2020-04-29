@@ -35,7 +35,8 @@ router.beforeEach((to,from,next) =>{
     next()
   }else if(!store.getters.token) {
     next('/login')
-  }else if (!store.getters.userInfo) {
+  }else if (!store
+    .getters.userInfo) {
     store.dispatch('user/getInfo').then(() => {
         next()
     }).catch(() => {

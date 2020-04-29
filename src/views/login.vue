@@ -7,7 +7,7 @@
         <el-main>
             <div class="login-main" v-loading="loading">
                 <div class="form-container">
-                    <el-form class="login-form" ref="form" :model="form" :rules="rules">
+                    <el-form :hide-required-asterisk="true" class="login-form" ref="form" :model="form" :rules="rules">
                         <el-form-item label="用户名" prop="student_id">
                             <el-input v-model="form.student_id"></el-input>
                         </el-form-item>
