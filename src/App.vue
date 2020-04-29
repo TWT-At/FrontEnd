@@ -19,7 +19,7 @@ body {
 
 div{
         box-sizing: border-box;
-    } 
+    }
 
 .el-main{
   padding:0px!important;

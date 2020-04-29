@@ -4,7 +4,7 @@
         <el-container>
             <el-aside width="240px">
                 <div @mouseover="showNav()" @mouseleave="invisyNav()" class="el-menu-box">
-                <el-menu :default-active="defaultUrl" class="el-menu" :collapse="isCollapse" :router="true">
+                <el-menu :default-active="defaultUrl" class="el-menu-vertical-demo" :collapse="isCollapse" :router="true">
                     <el-menu-item index="/main/home">
                         <img class="my-icon" :src="home">
                         <span class="menu-title">首页</span>
@@ -160,7 +160,6 @@ export default {
     }
 
     .menu-title{
-        width:60px;
         height:54px;
         font-size:24px;
         font-family:Microsoft YaHei;
@@ -170,8 +169,7 @@ export default {
     }
 
     .my-icon{
-        width:26px;
-        height: 26px;
+        height: 26px!important;
         padding-left: 20px;
     }
 
@@ -185,7 +183,7 @@ export default {
     }
 
     .el-menu{
-        box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
+        box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05)!important;
     }
 
     .el-menu--collapse{
@@ -205,5 +203,14 @@ export default {
         min-height: 1136px;
         background:#E9EFF2;
     }
+
+    .el-menu-box >>>  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 240px;
+    min-height: 400px;
+  }
+
+</style>
+
+<style scoped>
 
 </style>
