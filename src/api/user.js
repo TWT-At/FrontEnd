@@ -54,3 +54,11 @@ export function getGrouper(group){
         method: 'get',
     })
 }
+
+export function getComplex(data){
+    return request({
+        url:'/api/user/GetComplex',
+        method: 'POST',
+        data
+    })
+}

@@ -16,7 +16,7 @@
                 <el-menu-item index="6">iOS</el-menu-item>
             </el-menu>
         </div>
-        <div class="body-div">
+        <div v-loading="loading" class="body-div">
             <div class="select-main">
                 <div class="select-title select-title-role">角色</div>
                 <el-select v-model="options.role" clearable placeholder="角色">
@@ -88,15 +88,15 @@
 </template>
 
 <script>
-import {getGrouper} from '../api/user'
+import {getGrouper,getComplex} from '../api/user'
 
 export default {
     name:"grouper",
     data(){
         return{
-            defaultActive:"1",
-            list:[],
-            selecetList:[{
+            loading:false,
+            defaultActive:"3",
+            list:[{
             id: 2,
             name: "周菁涛",
             group_name: "前端组",
@@ -106,7 +106,7 @@ export default {
             date: 17,
             hour: 416,
             year: 9012,
-            fold: true,
+            fold: false,
             project: [
                 {
                     title: "海棠节H5",
@@ -148,7 +148,7 @@ export default {
             date: 17,
             hour: 416,
             year: 9012,
-            fold: true,
+            fold: false,
             project: [
                 {
                     title: "海棠节H5",
@@ -180,6 +180,7 @@ export default {
                 },
             ]
             }],
+            selecetList:[],
             options:{
                 role:"",
                 year:"",
@@ -202,7 +203,12 @@ export default {
             this.selecetList[i].fold=!this.selecetList[i].fold
         },
         handleSelect(key){
-            window.console.log(key)
+            this.options={
+                role:"",
+                year:"",
+                campus:""
+            }
+            this.list.length=0;
             let keyword;
             switch (key) {
                 case "1" :
@@ -226,10 +232,62 @@ export default {
                 default:
                     keyword=0
             }
+            this.loading=true;
             getGrouper(keyword).then(res =>{
-                window.console.log(res)
+                let {data}=res.data;
+                data.forEach(elem =>{
+                    let o={
+                        id:elem.id,
+                        name:elem.name,
+                        group_name:elem.group_name,
+                        group_role:elem.group_role,
+                        campus:elem.campus,
+                        fold:false,
+                        year:2013                                   //此处待更改
+                    }
+                    getComplex({id:o.id}).then(resdata=>{
+                        o.email=resdata.data.student[0].email;
+                        o.date=resdata.data.student[0].date;
+                        o.hour=resdata.data.student[0].hour;
+                        o.project=
+                        [{
+                                title: "海棠节H5",
+                                description: "天津大学海棠节H5开发",
+                                process: "已完成",
+                                cteatedDate:"2020-2-30",
+                                rate:59,
+                            },
+                            {
+                                title: "at系统开发",
+                                description: "天外天新人at系统开发",
+                                process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                                cteatedDate:"2020-2-30",
+                                rate:59,
+                            },
+                            {
+                                title: "at系统开发",
+                                description: "天外天新人at系统开发",
+                                process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                                cteatedDate:"2020-2-30",
+                                rate:59,
+                            },
+                            {
+                                title: "at系统开发",
+                                description: "天外天新人at系统开发",
+                                process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                                cteatedDate:"2020-2-30",
+                                rate:59,
+                            },]            //展示用途
+                        o.project.forEach(item => item.rate=60)
+                        if(o!=undefined){
+                            this.list.push(o)
+                            this.selecetList.push(o)
+                        }
+                    })
+                })
+                this.loading=false;
             })
-        }
+        },
     },
     mounted(){
         (function smoothscroll(){
@@ -239,6 +297,22 @@ export default {
                 window.scrollTo (0,currentScroll - (currentScroll/5));
             }
         })();
+    },
+    created(){
+        this.handleSelect(this.defaultActive)
+    },
+    watch:{
+        options:{
+            handler(val){
+                this.selecetList.length=0;
+                this.list.forEach(elem=>{
+                    if((val.role==""||val.role==elem.group_role)&&(val.campus==""||val.campus==elem.campus)&&(val.year==""||val.role==elem.year)){
+                        this.selecetList.push(elem)
+                    }
+                })
+            },
+            deep:true
+        }
     }
 }
 </script>
@@ -470,14 +544,15 @@ export default {
     }
 
     .body-div{
-         width: 1148px;
-        height: 1000px;
+        width: 1148px;
+        min-height: 1000px;
         background: #fff;
         display: flex;
         display: -webkit-flex; /* Safari */
         flex-direction:column;
         justify-content: flex-start;
         align-items: center;
+        padding-bottom: 100px;
     }
 
     .el-menu-item{
