@@ -32,7 +32,7 @@
                 v-model="options.year"
                 type="year"
                 value-format="yyyy"
-                placeholder="选择年">
+                placeholder="加入年份">
                 </el-date-picker>
                 <div class="select-title select-title-datecampus">校区</div>
                 <el-select v-model="options.campus" clearable placeholder="校区">
@@ -64,9 +64,20 @@
                 <div class="single-main">
                     <el-collapse-transition>
                         <div v-show="grouper.fold">
-                        <div class="fold-box">
-
-                        </div>
+                            <div class="fold-box">
+                                <div v-for="(proj,i) in grouper.project" :key="i" class="porject-div">
+                                    <el-progress 
+                                    type="circle" 
+                                    :percentage=proj.rate
+                                    :stroke-width=12
+                                    :width=66>
+                                    </el-progress>
+                                    <div class="proj-info">
+                                        {{proj.title}}<br/>
+                                        <span class="proj-info-span">起始时间：{{proj.cteatedDate}}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </el-collapse-transition>
                     <button @click="handleFold(i)" class="huge-button"><i :class="[grouper.fold?'el-icon-arrow-down hugebutton-icon':'el-icon-arrow-down']"></i></button>
@@ -102,15 +113,71 @@ export default {
                     description: "天津大学海棠节H5开发",
                     process: "已完成",
                     cteatedDate:"2020-2-30",
-                    rate:"59",
+                    rate:59,
                 },
                 {
                     title: "at系统开发",
                     description: "天外天新人at系统开发",
                     process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
                     cteatedDate:"2020-2-30",
-                    rate:"59",
-                }
+                    rate:59,
+                },
+                {
+                    title: "at系统开发",
+                    description: "天外天新人at系统开发",
+                    process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                    cteatedDate:"2020-2-30",
+                    rate:59,
+                },
+                {
+                    title: "at系统开发",
+                    description: "天外天新人at系统开发",
+                    process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                    cteatedDate:"2020-2-30",
+                    rate:59,
+                },
+            ]
+            },
+            {
+            id: 2,
+            name: "周菁涛",
+            group_name: "前端组",
+            group_role: "骨灰",
+            campus: "北洋园",
+            email: "qcx@tju.edu.cn",
+            date: 17,
+            hour: 416,
+            year: 9012,
+            fold: true,
+            project: [
+                {
+                    title: "海棠节H5",
+                    description: "天津大学海棠节H5开发",
+                    process: "已完成",
+                    cteatedDate:"2020-2-30",
+                    rate:59,
+                },
+                {
+                    title: "at系统开发",
+                    description: "天外天新人at系统开发",
+                    process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                    cteatedDate:"2020-2-30",
+                    rate:59,
+                },
+                {
+                    title: "at系统开发",
+                    description: "天外天新人at系统开发",
+                    process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                    cteatedDate:"2020-2-30",
+                    rate:59,
+                },
+                {
+                    title: "at系统开发",
+                    description: "天外天新人at系统开发",
+                    process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
+                    cteatedDate:"2020-2-30",
+                    rate:59,
+                },
             ]
             }],
             options:{
@@ -178,6 +245,52 @@ export default {
 
 <style scoped>
 
+    .proj-info-span{
+        font-size:14px;
+        font-family:Microsoft YaHei;
+        font-weight:normal;
+        color:#8F8F8F;
+        line-height:24px;
+    }
+
+    .proj-info{
+        font-size:14px;
+        font-family:Microsoft YaHei;
+        font-weight:bold;
+        color:rgba(0,0,0,1);
+        line-height:24px;
+        margin-left: 16px;
+    }
+
+    .porject-div{
+        width: 260px;
+        text-align: left;
+        display: flex;
+        display: -webkit-flex; /* Safari */
+        flex-direction:row;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .fold-box >>> .el-progress__text{
+        font-size:14px;
+        font-family:Microsoft YaHei;
+        font-weight:400;
+        color:rgba(3,163,234,1);
+    }
+
+    .fold-box{
+        background: #fff;
+        min-height: 100px;
+        display: flex;
+        display: -webkit-flex; /* Safari */
+        flex-direction:row;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap:wrap;
+    }
+
     .hugebutton-icon{
         transform:rotate(180deg);
         -ms-transform:rotate(180deg); 	/* IE 9 */
@@ -203,14 +316,13 @@ export default {
         color: #3B4C5D;
     }
 
-    .fold-box{
-        background: #fff;
-        min-height: 100px;
-    }
-
     .single-main{
         margin:24px 56px 0px 56px;
         text-align: center;
+    }
+
+    .show-button:hover{
+        cursor: pointer;
     }
 
     .show-button >>> i{
