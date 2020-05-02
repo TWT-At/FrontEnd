@@ -62,3 +62,18 @@ export function getComplex(data){
         data
     })
 }
+
+export function getMessage(){
+    return request({
+        url:'/api/user/GetMessage',
+        method: 'GET'
+    })
+}
+
+export function changeRegister(data){
+    return request({
+        url:'/api/user/register',
+        method: 'POST',
+        data
+    })
+}

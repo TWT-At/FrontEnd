@@ -17,7 +17,7 @@
                 <span class="info-span-second">{{userInfo.name}}</span>
                 <button class="change-userInfo-button" @click="toUserDetail">密码修改及信息维护>></button>
               </div>
-              <div class="info-div-second">组别：<span class="info-span-second">{{userInfo.group}}</span></div>
+              <div class="info-div-second">组别：<span class="info-span-second">{{complexInfo.campus}}-{{userInfo.group}}（{{userInfo.group_role}}）</span></div>
             </div>
         </div>
         <div class="weekly-box">
@@ -44,13 +44,13 @@
         <div class="message-main">
             <div class="message-big">
               <div class="message-div">
-                <div class="message-big-title"><el-checkbox v-model="messageBig.checked"></el-checkbox>【{{messageBig.type}}】{{messageBig.title}}</div>
-                <div class="message-big-content">{{messageBig.content}}</div>
+                <div class="message-big-title"><el-checkbox v-model="messageBig.checked"></el-checkbox>{{messageBig.type}}{{messageBig.title}}</div>
+                <div class="message-big-content">{{messageBig.message}}</div>
               </div>
               <div class="time-div">{{messageBig.time}}</div>
             </div>
             <div class="messages" v-for="(message,i) in messages" :key="i">
-              <div class="messages-title"><el-checkbox v-model="message.checked"></el-checkbox>【{{message.type}}】{{message.title}}</div>
+              <div class="messages-title"><el-checkbox v-model="message.checked"></el-checkbox>{{message.type}}{{message.title}}</div>
               <div class="messages-time">{{message.time}}</div>
             </div>
         </div>
@@ -81,7 +81,7 @@
   </div>
 </template>
 <script>
-import {getHead} from '../api/user'
+import {getHead,getComplex,getMessage,changeRegister} from '../api/user'
 import head from '../assets/vue.png'
 import message2x from '../assets/message2x.png'
 import weekly2x from '../assets/weekly2x.png'
@@ -98,24 +98,15 @@ export default {
       weekly2x,
       member2x,
       userInfo:this.$store.getters.userInfo,
+      complexInfo:{
+        email: "",
+        campus: "",
+        project: []
+      },
       messageNum:1,
       messageBig:{
-        type:"通知公告",
-        title:"天外天内部比赛开始啦",
-        content:"发公告的人很懒，什么也没有留下",
-        checked:false,
-        time:"15min前"
       },
-      messages:[
-        {
-          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
-        },{
-          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
-        },{
-          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
-        },{
-          type:"会议提醒",title:"您预约的会议将在30min后开始",checked:false,time:"1h之前"
-        }],
+      messages:[],
         projNum:{
           doing:3,
           done:3,
@@ -143,6 +134,91 @@ export default {
         }).then(data => {
             this.head=data;
         })
+  },
+  created(){
+    getComplex({id:this.userInfo.id}).then(res =>{
+      if(res.status === 200){
+        let {student,project}=res.data;
+        this.complexInfo.email = student[0].email;
+        this.complexInfo.campus = student[0].campus;
+        this.complexInfo.project = project;
+      }
+    })
+    getMessage().then( res=>{
+      if(res.status === 200){
+        let {data} = res.data;
+        if(data[0]){
+          let now=new Date();
+          let t=new Date(data[0].created_at.replace('-','/'));
+          let time ;
+          if(now.getFullYear()>t.getFullYear()){
+            time = now.getFullYear()-t.getFullYear()+"年前"
+          }else if(now.getMonth()>t.getMonth()){
+            time = now.getMonth()-t.getMonth()+"个月前"
+          }else if(now.getDate()>t.getDate()){
+            time = now.getDate()-t.getDate()+"天前"
+          }else if(now.getHours()>t.getHours()){
+            time = now.getHours()-t.getHours()+"小时前"
+          }else if(now.getMinutes()>t.getMinutes()){
+            time = now.getMinutes()-t.getMinutes()+"分钟前"
+          }else {
+            time="刚刚"
+          }
+          this.messageBig={
+            id:data[0].id,
+            type:data[0].type,
+            title:data[0].title,
+            message:data[0].message,
+            checked:!!data[0].read,
+            time:time
+          }
+          data.shift();
+          data.forEach( elem =>{
+            let now=new Date();
+          let t=new Date(elem.created_at.replace('-','/'));
+          let time ;
+          if(now.getFullYear()>t.getFullYear()){
+            time = now.getFullYear()-t.getFullYear()+"年前"
+          }else if(now.getMonth()>t.getMonth()){
+            time = now.getMonth()-t.getMonth()+"个月前"
+          }else if(now.getDate()>t.getDate()){
+            time = now.getDate()-t.getDate()+"天前"
+          }else if(now.getHours()>t.getHours()){
+            time = now.getHours()-t.getHours()+"小时前"
+          }else if(now.getMinutes()>t.getMinutes()){
+            time = now.getMinutes()-t.getMinutes()+"分钟前"
+          }else {
+            time="刚刚"
+          }
+            this.messages.push({
+            id:elem.id,
+            type:elem.type,
+            title:elem.title,
+            message:elem.message,
+            checked:!!elem.read,
+            time:time
+            })
+          })
+        }
+      }
+    })
+  },
+  watch:{
+    messageBig:{
+      handler(val){
+        changeRegister({message_id:this.messageBig.id,status:Number(val.checked)})
+      },
+      deep:true
+    },
+    messages:{
+      handler(val,oldVal){
+        window.console.log(oldVal)
+        window.console.log(val)
+        for(let i=0;i<this.messages.length;i++){
+            changeRegister({message_id:val[i].id,status:Number(val[i].checked)})
+        }
+      }
+    }
   }
 };
 </script>
