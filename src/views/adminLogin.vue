@@ -50,21 +50,21 @@ export default {
     methods: {
         submitForm(form){
             this.$refs[form].validate((valid) => {
-            if (valid) {
-                removeSession()
-                this.loading=true;
-                adminLogin({
-                    acount:form.student_id,
-                    password:form.password
-                }).then(res=>{
+                if (valid) {
+                    removeSession()
+                    this.loading=true;
+                    adminLogin({
+                        acount:form.student_id,
+                        password:form.password
+                    }).then(res=>{
+                        window.console.log(res)
+                    });
+                }else{
                     window.console.log(res)
-                });
-            }else{
+                }
 
-            }
-
-        })
-            
+            })
+        }  
     }
 }
 </script>

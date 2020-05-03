@@ -14,7 +14,7 @@
                 v-model="search.searchInput"
                 clearable>
                 </el-input>
-                <button class="search-button">
+                <button class="search-button" @click="handleSearch()">
                     搜索
                 </button>
             </div>
@@ -40,7 +40,7 @@
                     :value="item">
                     </el-option>
                 </el-select>
-                <button class="screen-button">筛选</button>
+                <button class="screen-button" @click="handleSearch()">筛选</button>
             </div>
             <el-divider></el-divider>
             <div class="table-div">
@@ -55,10 +55,10 @@
                             <el-checkbox v-model="scope.row.checked"></el-checkbox> 
                         </template>
                     </el-table-column>
-                    <el-table-column prop="title" label="标题"></el-table-column>
-                    <el-table-column prop="obj" label="发布对象"></el-table-column>
-                    <el-table-column prop="date" label="发布时间"></el-table-column>
-                    <el-table-column prop="nums" label="已看人数"></el-table-column>
+                    <el-table-column prop="title"  label="标题"></el-table-column>
+                    <el-table-column prop="obj"  label="发布对象"></el-table-column>
+                    <el-table-column prop="date"  label="发布时间"></el-table-column>
+                    <el-table-column prop="nums" width="100" label="已看人数"></el-table-column>
                 </el-table>
                 <el-pagination
                 :current-page="currentPage"
@@ -79,41 +79,42 @@ export default {
         return{
             search:{
             searchInput:"",
-            searchDate:"",
+            searchDate:null,
             searchObj:"",
             },
             options: ["前端","后端","安卓","设计","iOS","产品"],
             currentPage:1,
             pagesize:14,
-            tableData:[
+            tableData:[],
+            data:[
                 {
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"2020-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"223",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
-                    title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
+                    title:"123",obj:"前端",date:"0202-2-2",nums:999,checked:false
                 },{
                     title:"123",obj:"1",date:"0202-2-2",nums:999,checked:false
                 },{
@@ -136,6 +137,23 @@ export default {
         handleCurrentChange: function(currentPage) {
             this.currentPage = currentPage;
         },
+        handleSearch(){
+            this.tableData.length=0;
+            this.data.forEach(elem=>{
+                let reg =  new RegExp(this.search.searchInput);
+                let a=this.search.searchInput==""||reg.test(elem.title);
+                let b=this.search.searchDate==null||((new Date(this.search.searchDate[0].replace('-','/')))<(new Date(elem.date.replace('-','/')))&&(new Date(this.search.searchDate[1].replace('-','/')))>(new Date(elem.date.replace('-','/'))));  
+                let c=(this.search.searchObj=="")||(this.search.searchObj==elem.obj);
+                if(a&&b&&c){
+                    this.tableData.push(elem)
+                }
+            })
+        }
+    },
+    mounted(){
+        this.data.forEach(elem=>{
+            this.tableData.push(elem)
+        })
     }
 }
 </script>
@@ -274,6 +292,7 @@ export default {
         font-weight:bold;
         color:rgba(252,254,255,1);
         line-height:24px;
+        margin-right: 10px;
     }
 
     .title-line-div{
