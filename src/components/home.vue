@@ -26,7 +26,7 @@
             <div class="title-word">周报状态</div>
           </div>
           <div class="weekly-main">
-            <div class="weekly-div-first weekly-div">第202015周报:<span class="sub-status">未提交</span></div>
+            <div class="weekly-div-first weekly-div">第202015周报:<span v-if="!userInfo.WeekPublicationSituation" class="sub-status">未提交</span><span v-if="userInfo.WeekPublicationSituation" class="sub-status">已提交</span></div>
             <div class="weekly-div-second weekly-div">起止日期：2020/04/07～2020/04/13（美东时间）</div>
             <div class="weekly-div-third weekly-div">
               周报截止日期为每周周一，在时间范围内可以进行编辑。<br/>超过时间的周报不能进行编辑。
@@ -81,7 +81,7 @@
   </div>
 </template>
 <script>
-import {getHead,getComplex,getMessage,changeRegister} from '../api/user'
+import {getHead,getComplex,getMessage,UpdateRead} from '../api/user'
 import head from '../assets/vue.png'
 import message2x from '../assets/message2x.png'
 import weekly2x from '../assets/weekly2x.png'
@@ -103,7 +103,7 @@ export default {
         campus: "",
         project: []
       },
-      messageNum:1,
+      messageNum:0,
       messageBig:{
       },
       messages:[],
@@ -147,6 +147,11 @@ export default {
     getMessage().then( res=>{
       if(res.status === 200){
         let {data} = res.data;
+        data.forEach(elem =>{
+          if(elem.read == 0){
+            this.messageNum++
+          }
+        })
         if(data[0]){
           let now=new Date();
           let t=new Date(data[0].created_at.replace('-','/'));
@@ -206,18 +211,17 @@ export default {
   watch:{
     messageBig:{
       handler(val){
-        changeRegister({message_id:this.messageBig.id,status:Number(val.checked)})
+        UpdateRead({message_id:this.messageBig.id,status:Number(val.checked)})
       },
       deep:true
     },
     messages:{
-      handler(val,oldVal){
-        window.console.log(oldVal)
-        window.console.log(val)
+      handler(val){
         for(let i=0;i<this.messages.length;i++){
-            changeRegister({message_id:val[i].id,status:Number(val[i].checked)})
+            UpdateRead({message_id:val[i].id,status:Number(val[i].checked)})
         }
-      }
+      },
+      deep:true
     }
   }
 };

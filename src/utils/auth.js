@@ -13,3 +13,7 @@ export function setToken(sessionID){
 export function removeToken(){
     return Cookies.remove(tokenKey)
 }
+
+export function removeSession(){
+    return Cookies.remove("at_session")
+}

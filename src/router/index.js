@@ -24,6 +24,12 @@ Vue.use(VueRouter)
           name:'grouper',path:'grouper',component:() => import('../components/grouper')
         }
       ]},
+      {name:'adminMain' ,path:'/adminMain',component:() => import('../components/admin/adminMain'),
+        children:[
+            {
+                name:'adminHome',path:'adminHome',component:() => import('../components/admin/adminHome')
+            }
+        ]}
 ]
 
 const router = new VueRouter({
@@ -35,8 +41,7 @@ router.beforeEach((to,from,next) =>{
     next()
   }else if(!store.getters.token) {
     next('/login')
-  }else if (!store
-    .getters.userInfo) {
+  }else if (!store.getters.userInfo) {
     store.dispatch('user/getInfo').then(() => {
         next()
     }).catch(() => {

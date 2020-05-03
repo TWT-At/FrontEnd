@@ -37,6 +37,11 @@ const actions = {
                     setToken(data.token);
                     resolve()
                 }).catch(error => {
+                    Message({
+                        message:"用户名或者密码错误",
+                        type:"error",
+                        duration:5000
+                    });
                     reject(error)
                 })
         })

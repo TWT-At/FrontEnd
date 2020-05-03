@@ -70,9 +70,9 @@ export function getMessage(){
     })
 }
 
-export function changeRegister(data){
+export function UpdateRead(data){
     return request({
-        url:'/api/user/register',
+        url:'/api/user/UpdateRead',
         method: 'POST',
         data
     })
