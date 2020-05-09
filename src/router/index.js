@@ -22,6 +22,9 @@ Vue.use(VueRouter)
         },
         {
           name:'grouper',path:'grouper',component:() => import('../components/grouper')
+        },
+        {
+          name:'project',path:'project',component:() => import('../components/project')
         }
       ]},
       {name:'adminMain' ,path:'/adminMain',component:() => import('../components/admin/adminMain'),

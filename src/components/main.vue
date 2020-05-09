@@ -25,7 +25,7 @@
                         <img :src="check" class="my-icon">
                         <span class="menu-title">考勤</span>
                     </el-menu-item>
-                    <el-menu-item index="6">
+                    <el-menu-item index="/main/project">
                         <img :src="project" class="my-icon">
                         <span class="menu-title">项目</span>
                     </el-menu-item>
