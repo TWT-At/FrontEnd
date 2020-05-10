@@ -234,6 +234,7 @@ export default {
   }
 
   .group-button{
+    transition: all .2s;
     outline: none;
     border:none;
     background:rgba(252,254,255,1);
@@ -505,6 +506,7 @@ export default {
   }
 
   .change-userInfo-button{
+    transition: all .2s;
     outline: none;
     border:none;
     height:15px;

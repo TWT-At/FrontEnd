@@ -283,10 +283,11 @@ export default {
 
     .changePass-button:hover,.changePass-button:focus{
         cursor: pointer;
-        filter: brightness(60%);
+        background:#13283C;
     }
 
     .changePass-button{
+        transition: all .2s;
         outline: none;
         border: none;
         width:167px;
