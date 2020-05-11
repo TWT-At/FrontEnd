@@ -49,10 +49,10 @@ export default {
         submitForm(form){
             this.$refs[form].validate((valid) => {
           if (valid) {
-              //this.loading=true;
+              this.loading=true;
              this.$store.dispatch('user/login',this.form).then( ()=>{
-                 this.loading=false;
                  this.$router.push('/main/home');
+                 this.loading=false;
              })
              .catch(() => {
                  this.loading=false;

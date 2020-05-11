@@ -8,6 +8,7 @@ Vue.use(VueRouter)
   const routes = [
     {path: '/' , redirect: '/main/home'},
     {path: '/main' , redirect: '/main/home'},
+    {path: '/main/projMain' , redirect: '/main/projMain/project'},
     {name:'login' ,path:'/login',component:() => import('../views/login')},
     {name:'main' ,path:'/main',component:() => import('../components/main'),
       children:[
@@ -24,7 +25,12 @@ Vue.use(VueRouter)
           name:'grouper',path:'grouper',component:() => import('../components/grouper')
         },
         {
-          name:'project',path:'project',component:() => import('../components/project')
+          name:'projMain',path:'projMain',component:() => import('../components/projMain'), 
+          children:[
+            {
+              name:'project',path:'project',component:() => import('../components/project')
+            }
+          ]
         }
       ]},
       {name:'adminMain' ,path:'/adminMain',component:() => import('../components/admin/adminMain'),

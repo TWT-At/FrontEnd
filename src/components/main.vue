@@ -25,7 +25,7 @@
                         <img :src="check" class="my-icon">
                         <span class="menu-title">考勤</span>
                     </el-menu-item>
-                    <el-menu-item index="/main/project">
+                    <el-menu-item index="/main/projMain">
                         <img :src="project" class="my-icon">
                         <span class="menu-title">项目</span>
                     </el-menu-item>
@@ -94,15 +94,15 @@ export default {
         getPath() {
                 let href = window.location.href
                 //this.defaultUrl = href.split('#')[1]
-                switch (href.split('#')[1]){
-                case "/main/userDetail" : 
+                switch (href.split('#')[1].split('/')[2]){
+                case "userDetail" : 
                     this.defaultUrl="/main/home";
                     break;
-                case "/main/grouper" :
+                case "grouper" :
                     this.defaultUrl="/main/home";
                     break;
                 default:
-                    this.defaultUrl=href.split('#')[1];
+                    this.defaultUrl="/main/"+href.split('#')[1].split('/')[2];
                 }
             },
         click(){
