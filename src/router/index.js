@@ -29,6 +29,9 @@ Vue.use(VueRouter)
           children:[
             {
               name:'project',path:'project',component:() => import('../components/project')
+            },
+            {
+              name:'projDetail',path:'projDetail',component:() => import('../components/projDetail')
             }
           ]
         }
@@ -54,6 +57,7 @@ router.beforeEach((to,from,next) =>{
     store.dispatch('user/getInfo').then(() => {
         next()
     }).catch(() => {
+      next()
     })
   }else{
     next()

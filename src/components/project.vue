@@ -1,7 +1,7 @@
 <template>
   <div class="main-box">
     <div class="main-div">
-        <div v-for="(proj,index) in data" :key="index" class="proj-div">
+        <div v-for="(proj,index) in data" :key="index" class="proj-div" v-on:click="handleClick(proj.id)">
             <el-progress 
             type="circle" 
             :percentage=proj.rate*100
@@ -17,7 +17,7 @@
                 <div v-if="handleIf(proj.rate)" class="ddl-title">
                     DDL:
                 </div>
-                <div v-if="handleIf(proj.rate)" class="ddl-main">
+                <div v-if="handleIf(proj.rate)" class="ddl-main" >
                     <div class="ddl-item" v-for="(item,index) in proj.DDL" :key="index">
                         【{{item.time}}】{{item.title}}
                     </div>
@@ -85,6 +85,10 @@ export default {
         }else{
             return false
         }
+    },
+    handleClick(id){
+       this.$store.dispatch('user/setProjDetailID',id)
+       this.$router.push('/main/projMain/projDetail')
     }
   }
   ,created(){
