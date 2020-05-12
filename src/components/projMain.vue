@@ -16,7 +16,7 @@
     :visible.sync="dialogVisible"
     width="984px">
         <div class="form-item dialog-name"><div class="form-tag">项目名称：</div><el-input v-model="createForm.name" placeholder="请输入项目名称"></el-input></div>
-        <div class="form-item dialog-des"><div class="form-tag">项目简介：</div><el-input  type="textarea" :autosize="{ minRows: 6, maxRows: 10}" v-model="createForm.describe" placeholder="请输入项目简介"></el-input></div>
+        <div class="form-item dialog-des"><div class="form-tag">项目简介：</div><el-input  type="textarea" maxlength="400" show-word-limit :autosize="{ minRows: 6, maxRows: 10}" v-model="createForm.describe" placeholder="请输入项目简介"></el-input></div>
         <div class="form-item dialog-opt">
             <div class="form-tag">项目简介：</div>
                 <el-select v-model="grouper.group" placeholder="组别">
@@ -27,7 +27,7 @@
                     :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select v-model="grouper.campus" placeholder="组别">
+                <el-select v-model="grouper.campus" placeholder="校区">
                     <el-option
                     v-for="item in campusOption"
                     :key="item"
@@ -132,7 +132,7 @@ export default {
         margin-bottom: 34px;
     }
 
-    .main-box >>> .el-dialog{
+    .main-container >>> .el-dialog{
         background:rgba(252,254,255,1);
         border-radius:20px;
     }
@@ -180,7 +180,7 @@ export default {
         width: 604px;
     }
 
-    .main-box >>> .el-dialog__title{
+    .main-container >>> .el-dialog__title{
         font-size:30px;
         font-family:Microsoft YaHei;
         font-weight:bold;

@@ -1,7 +1,7 @@
 <template>
   <div class="main-box">
     <div class="main-div">
-        <div v-for="(proj,index) in data" :key="index" class="proj-div" v-on:click="handleClick(proj.id)">
+        <div v-for="(proj,index) in data" :key="index" class="proj-div" v-on:click="handleClick(proj)">
             <el-progress 
             type="circle" 
             :percentage=proj.rate*100
@@ -44,7 +44,7 @@ export default {
                 name: "齐呈祥",
                 title: "at系统开发",
                 created_at: "2020-04-14 12:24:54",
-                rate:0.1,
+                rate:0.6,
                 DDL:[
                     {title:"完成原型图",time:"2020-4-44"},
                     {title:"完成原型图",time:"2020-4-44"},
@@ -86,8 +86,8 @@ export default {
             return false
         }
     },
-    handleClick(id){
-       this.$store.dispatch('user/setProjDetailID',id)
+    handleClick(proj){
+       this.$store.dispatch('user/setProjDetailID',proj)
        this.$router.push('/main/projMain/projDetail')
     }
   }
@@ -97,6 +97,11 @@ export default {
 };
 </script>
 <style scoped>
+
+    .proj-div:hover{
+        cursor: pointer;
+        background-color: #CCD1D6;
+    }
 
     .finish-span{
         font-size:14px;
@@ -166,6 +171,7 @@ export default {
     }
 
     .proj-div{
+        transition: all .2s;
         width:1140px;
         min-height:96px;
         background:rgba(252,254,255,1);
