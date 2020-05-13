@@ -88,7 +88,7 @@ export default {
     },
     handleClick(proj){
        this.$store.dispatch('user/setProjDetailID',proj)
-       this.$router.push('/main/projMain/projDetail')
+       this.$router.push('/main/projMain/projDetail/projDetailMem')
     }
   }
   ,created(){

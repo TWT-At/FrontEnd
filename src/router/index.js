@@ -31,7 +31,12 @@ Vue.use(VueRouter)
               name:'project',path:'project',component:() => import('../components/project')
             },
             {
-              name:'projDetail',path:'projDetail',component:() => import('../components/projDetail')
+              name:'projDetail',path:'projDetail',component:() => import('../components/projDetail'),
+              children:[
+                {
+                  name:'projDetailMem',path:'projDetailMem',component:() => import('../components/projDetailMem')
+                }
+              ]
             }
           ]
         }

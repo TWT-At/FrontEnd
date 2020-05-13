@@ -1,7 +1,7 @@
 <template>
   <div class="main-box">
       <div class="title-div">
-          <el-progress :color="getColor" :stroke-width=6 :width=68 type="circle" :percentage="ID.rate*100"></el-progress>
+          <el-progress :color="getColor" :stroke-width=6 :width=68 type="circle" :percentage=ID.rate*100></el-progress>
           <div v-bind:style="{width:ID.rate*960+'px'}" :class="isFinish()?'finish-line':'process-line'"></div>
           <div class="bg-line"></div>
           <div class="proj-title">{{ProjDetail.title}}</div>
@@ -37,6 +37,7 @@
         <div class="nav-line"></div>
         <button :id="handleStyle(3)" class="nav-button nav-log" @click="handleNav(3)">查看日志</button>
     </div>
+    <router-view/>
   </div>
 </template>
 
@@ -45,7 +46,7 @@ export default {
     name:'projDetail',
     data (){
         return{
-            navKey:1,
+        navKey:1,
         ID:this.$store.getters.projDetailID,
         ProjDetail: {
         title: "at系统开发",
@@ -103,8 +104,17 @@ export default {
             this.$router.push('/main/projMain/project')
         },
         handleNav(key){
-            window.console.log(key)
             this.navKey=key
+            this.$store.dispatch('user/setProjInfo',this.ProjDetail)
+            switch(key){
+                case 1:
+                    this.$router.push('/main/projMain/projDetail/projDetailMem').catch(err=>{
+                        window.console.log(err)
+                    })
+                    break;
+                default:
+                    break;
+            }
         },
         handleStyle(key){
             if(key==this.navKey){
@@ -113,6 +123,9 @@ export default {
                 return ''
             }
         }
+    },
+    created(){
+        this.handleNav(1)
     }
 }
 </script>
@@ -334,7 +347,7 @@ export default {
 
     .main-box{
         width:1140px;
-        height:987px;
+        min-height:987px;
         background:rgba(252,254,255,1);
         box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
         border-radius:20px;
@@ -344,6 +357,7 @@ export default {
         justify-content: flex-start;
         align-items: flex-start;
         margin-top: 48px;
+        margin-bottom: 48px;
         padding: 32px;
     }
 </style>

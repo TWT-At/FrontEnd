@@ -6,7 +6,8 @@ import { Message } from 'element-ui'
 const state = {
     token: getToken(),
     userInfo:null,
-    projDetailID:'',
+    projDetailID:null,
+    projInfo:null,
 }
 
 
@@ -19,6 +20,9 @@ const mutations = {
     },
     SET_PROJDETAILID:(state,id) => {
         state.projDetailID = id
+    },
+    SET_PROJINFO:(state,info) => {
+        state.projInfo = info
     },
 }
 
@@ -63,6 +67,9 @@ const actions = {
     },
     setProjDetailID({commit},id){
         commit('SET_PROJDETAILID', id);
+    },
+    setProjInfo({commit},info){
+        commit('SET_PROJINFO', info);
     }
 }
 

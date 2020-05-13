@@ -24,4 +24,9 @@ div{
 .el-main{
   padding:0px!important;
 }
+
+button{
+  outline: none;
+  border: none;
+}
 </style>
