@@ -112,6 +112,9 @@ export default {
                         window.console.log(err)
                     })
                     break;
+                case 2:
+                    this.$router.push('/main/projMain/projDetail/projDetailTask')
+                    break
                 default:
                     break;
             }

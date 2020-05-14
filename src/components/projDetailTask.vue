@@ -1,23 +1,17 @@
 <template>
   <div class="main-div">
       <div class="button-div">
-          <div class="mem-num">项目成员（{{projInfo.member.length}}）</div>
-          <button class="head-button add-button">添加成员</button>
-          <button :style="changeSelectStype()" class="head-button select-button" @click="handleSelected">
-              <span v-if="!selected">选择成员</span>
-              <span v-if="selected">取消</span>
-          </button>
-          <button v-if="selected" class="head-button move-head-button">转让组长</button>
-          <button v-if="selected" class="head-button remove-button">移除成员</button>
+          <div class="task-num">任务（{{projInfo.task.length}}）</div>
+          <button class="head-button">新建任务</button>
       </div>
-      <div class="mem-item" v-for="(mem,index) in projInfo.member" :key=index>
+      <div class="task-item" v-for="(task,index) in projInfo.task" :key=index>
           <div class="item-head">
-              <el-progress type="circle" :width=50 :stroke-width=2 :show-text=false :percentage="25"></el-progress>
-              <img :src="head" class="img-head">
-              <div class="item-title">组长：{{mem.name}}（{{mem.group_name}}）</div>
+              <div class="item-title">TASK：{{task.title}}</div>
               <div class="item-line"></div>
-              <div class="item-time">加入项目时间：{{mem.created_at}}</div>
-              <div class="item-task">任务数7/9</div>
+              <div class="item-cteated">起始时间：{{task.created_at}}
+                    <span class="item-end">DDL：9012-13-32</span>
+                    <span class="item-mem">参与者：{{task.name}}</span>
+                </div>
               <img class="online-img" :src=doing2x>
           </div>
       </div>
@@ -25,7 +19,6 @@
 </template>
 
 <script>
-import head from '../assets/vue.png'
 import doing2x from '../assets/doing2x.png'
 import finish2x from '../assets/finish2x.png'
 
@@ -33,29 +26,22 @@ export default {
   name: "ProjDetailMem",
   data() {
     return {
-        selected:false,
         doing2x,
         finish2x,
-        head,
       projInfo:this.$store.getters.projInfo,
     }
   },
   methods:{
-      handleSelected(){
-          this.selected=!this.selected;
-      },
-      changeSelectStype(){
-          if(this.selected){
-              return 'background-color:#7d7f81'
-          }else{
-              return ''
-          }
-      }
 
   }
 };
 </script>
 <style scoped>
+
+    .item-end{
+        color: #A20404;
+        font-weight: bold;
+    }
 
     .online-img{
         height: 22px;
@@ -65,20 +51,10 @@ export default {
         right:6px;
     }
 
-    .item-task{
+    .item-cteated{
         position:absolute;
         top:38px;
-        right:24px;
-        font-size:12px;
-        font-family:Microsoft YaHei;
-        font-weight:400;
-        color:rgba(143,143,143,1);
-    }
-
-    .item-time{
-        position:absolute;
-        top:38px;
-        left:88px;
+        left:24px;
         font-size:12px;
         font-family:Microsoft YaHei;
         font-weight:400;
@@ -89,8 +65,8 @@ export default {
         background-color: #d6d8d9;
         position:absolute;
         top:36px;
-        left:84px;
-        width:420px;
+        left:18px;
+        width:488px;
         height:2px;
         border-radius: 1px;
     }
@@ -98,68 +74,27 @@ export default {
     .item-title{
         position:absolute;
         top:16px;
-        left:88px;
+        left:24px;
         font-size:14px;
         font-family:Microsoft YaHei;
         font-weight:bold;
         color:rgba(0,0,0,1);
     }
 
-    .img-head{
-        height: 46px;
-        width: 46px;
-        position:absolute;
-        top:14px;
-        left:24px;
-        border-radius: 50%;
-    }
 
-    .item-head >>> .el-progress {
-        position:absolute;
-        top:12px;
-        left:22px;
-    }
-
-    .mem-item{
+    .task-item{
         width:524px;
-        height:72px;
+        min-height:72px;
         background:rgba(252,254,255,1);
         box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius:10px;
         position: relative;
     }
 
-    .button-div >>> .remove-button:hover{
-        background:#690101;
-    }
-
-    .button-div >>> .remove-button{
-        margin-left: 30px;
-        background: #a20404;
-    }
-
-    .move-head-button:hover{
-        background:#13283C;
-    }
-
-    .move-head-button{
-        margin-left: 592px;
-    }
-
-    .select-button{
-        margin-left: 30px;
-    }
-
-    .add-button{
-        margin-left: 42px;
-    }
-
-    .add-button:hover{
-        background:#13283C;
-    }
 
     .head-button:hover{
         cursor: pointer;
+        background:#13283C;
     }
 
     .head-button{
@@ -175,7 +110,7 @@ export default {
         color:rgba(252,254,255,1);
     }
 
-    .mem-num{
+    .task-num{
         font-size:14px;
         font-family:Microsoft YaHei;
         font-weight:bold;

@@ -10,6 +10,11 @@ Vue.use(VueRouter)
     {path: '/main' , redirect: '/main/home'},
     {path: '/main/projMain' , redirect: '/main/projMain/project'},
     {name:'login' ,path:'/login',component:() => import('../views/login')},
+    {
+      path: '*',    // 此处需特别注意至于最底部
+      redirect: '/404'
+      // redirect: '/'
+  },
     {name:'main' ,path:'/main',component:() => import('../components/main'),
       children:[
         {
@@ -35,6 +40,9 @@ Vue.use(VueRouter)
               children:[
                 {
                   name:'projDetailMem',path:'projDetailMem',component:() => import('../components/projDetailMem')
+                },
+                {
+                  name:'projDetailTask',path:'projDetailTask',component:() => import('../components/projDetailTask')
                 }
               ]
             }

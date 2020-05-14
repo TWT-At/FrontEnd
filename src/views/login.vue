@@ -15,7 +15,8 @@
                             <el-input type="password" v-model="form.password"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <button class="login-button" type="primary" @click="submitForm('form')">登录</button>
+                            <button class="login-button" @click="submitForm()">登录</button>
+                            <button class="login-button" v-on:click="okkk()">123</button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -46,24 +47,28 @@ export default {
         }
     },
     methods: {
-        submitForm(form){
-            this.$refs[form].validate((valid) => {
-          if (valid) {
-              this.loading=true;
-             this.$store.dispatch('user/login',this.form).then( ()=>{
-                 this.$router.push('/main/home');
-                 this.loading=false;
-             })
-             .catch(() => {
-                 this.loading=false;
-             })
-          } else {
-            alert('请输入正确用户名密码格式');
-            return false;
-          }
-        });
-        }
+        submitForm(){
+            this.$refs.form.validate((valid) => {
+                if (valid) {
+                    this.loading=true;
+                    this.$store.dispatch('user/login',this.form).then( ()=>{
+                        window.console.log(this.$store.getters.token)
+                        this.$router.push('/main/home');
+                        this.loading=false;
+                    })
+                    .catch(() => {
+                        this.loading=false;
+                    })
+                } else {
+                    alert('请输入正确用户名密码格式');
+                    return false;
+                }
+            });
+        },
+        okkk(){
+        window.console.log(123)
     }
+    },
 }
 </script>
 

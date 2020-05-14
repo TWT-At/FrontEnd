@@ -43,7 +43,7 @@ const actions = {
                     const {data} = resData.data;
                     commit('SET_TOKEN',data.token);
                     setToken(data.token);
-                    resolve()
+                    resolve(data.token)
                 }).catch(error => {
                     Message({
                         message:"用户名或者密码错误",
