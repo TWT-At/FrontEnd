@@ -115,6 +115,9 @@ export default {
                 case 2:
                     this.$router.push('/main/projMain/projDetail/projDetailTask')
                     break
+                case 3:
+                    this.$router.push('/main/projMain/projDetail/projDetailLog')
+                    break;
                 default:
                     break;
             }

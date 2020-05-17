@@ -43,6 +43,9 @@ Vue.use(VueRouter)
                 },
                 {
                   name:'projDetailTask',path:'projDetailTask',component:() => import('../components/projDetailTask')
+                },
+                {
+                  name:'projDetailLog',path:'projDetailLog',component:() => import('../components/projDetailLog')
                 }
               ]
             }
