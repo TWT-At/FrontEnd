@@ -16,7 +16,6 @@
                         </el-form-item>
                         <el-form-item>
                             <button class="login-button" @click="submitForm()">登录</button>
-                            <button class="login-button" v-on:click="okkk()">123</button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -65,10 +64,13 @@ export default {
                 }
             });
         },
-        okkk(){
+        ok(){
         window.console.log(123)
-    }
+        }
     },
+    mounted(){
+        this.ok()
+    }
 }
 </script>
 

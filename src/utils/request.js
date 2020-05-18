@@ -15,6 +15,8 @@ const service = axios.create({
             switch (config["Content-Type"]) {
                 case "multipart/form-data":
                     return oldData;
+                case "application/json":
+                    return JSON.stringify(oldData);
                 default:
                     return qs.stringify(oldData);
             }

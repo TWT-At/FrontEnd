@@ -12,14 +12,14 @@
         </div>
         <router-view/>
         <el-dialog
-    title="创建项目"
-    :visible.sync="dialogVisible"
-    width="984px">
-        <div class="form-item dialog-name"><div class="form-tag">项目名称：</div><el-input v-model="createForm.name" placeholder="请输入项目名称"></el-input></div>
-        <div class="form-item dialog-des"><div class="form-tag">项目简介：</div><el-input  type="textarea" maxlength="400" show-word-limit :autosize="{ minRows: 6, maxRows: 10}" v-model="createForm.describe" placeholder="请输入项目简介"></el-input></div>
+        title="创建项目"
+        :visible.sync="dialogVisible"
+        width="984px">
+        <div class="form-item dialog-name"><div class="form-tag">项目名称：</div><el-input v-model="createForm.title" placeholder="请输入项目名称"></el-input></div>
+        <div class="form-item dialog-des"><div class="form-tag">项目简介：</div><el-input  type="textarea" maxlength="400" show-word-limit :autosize="{ minRows: 6, maxRows: 10}" v-model="createForm.description" placeholder="请输入项目简介"></el-input></div>
         <div class="form-item dialog-opt">
-            <div class="form-tag">项目简介：</div>
-                <el-select v-model="grouper.group" placeholder="组别">
+            <div class="form-tag">项目成员：</div>
+                <el-select v-model="grouper.group" clearable placeholder="组别">
                     <el-option
                     v-for="item in groupOption"
                     :key="item.value"
@@ -27,7 +27,7 @@
                     :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select v-model="grouper.campus" placeholder="校区">
+                <el-select v-model="grouper.campus" clearable placeholder="校区">
                     <el-option
                     v-for="item in campusOption"
                     :key="item"
@@ -35,7 +35,7 @@
                     :value="item">
                     </el-option>
                 </el-select>
-                <el-select v-model="grouper.role" placeholder="角色">
+                <el-select v-model="grouper.role" clearable placeholder="角色">
                     <el-option
                     v-for="item in roleOption"
                     :key="item"
@@ -43,18 +43,28 @@
                     :value="item">
                     </el-option>
                 </el-select>
-                <el-select v-model="grouper.role" placeholder="姓名">
+                <el-select v-model="grouperOnly.name" clearable placeholder="姓名">
                     <el-option
-                    v-for="item in manOption"
-                    :key="item"
-                    :label="item"
-                    :value="item">
+                    v-for="item in selesctData"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name">
                     </el-option>
                 </el-select>
-                <i class="el-icon-circle-plus" @click="dialogVisible = false"></i>
+                <i class="el-icon-circle-plus" @click="handleAdd"></i>
             </div>
-        <div class="form-item dialog-man">123123</div>
-        <button class="create-button" disabled="true">确认录入</button>
+        <div class="form-item dialog-mem">
+            <el-tag
+            :key="index"
+            v-for="(tag,index) in addMem"
+            closable
+            :disable-transitions="false"
+            color="#F1F2F9"
+            @close="handleClose(index)">
+            {{tag.name}}
+            </el-tag> 
+        </div>
+        <button class="create-button" @click="handleSub">确认录入</button>
     </el-dialog>
     </div>
 </template>
@@ -62,6 +72,9 @@
 <script>
 import doing2x from '../assets/doing2x.png'
 import finish2x from '../assets/finish2x.png'
+
+import {getUserDatum,createProject,addMember} from '../api/user'
+//
 
 export default {
     name:'projMain',
@@ -73,46 +86,169 @@ export default {
             title:[3,3],
             groupOption:[
             {
-                value:"前端",
-                label:"前端"
+                value:"前端组",
+                label:"前端组"
             },{
-                value:"后端",
-                label:"后端"
+                value:"程序组",
+                label:"程序组"
             },{
-                value:'产品',
-                label:'产品'
+                value:'产品组',
+                label:'产品组'
             },{
-                value:'设计',
-                label:'设计'
+                value:'设计组',
+                label:'设计组'
             },{
-                value:'安卓',
-                label:'安卓'
+                value:'安卓组',
+                label:'安卓组'     //待定
             },{
-                value:'iOS',
-                label:'iOS'
+                value:'IOS',
+                label:'iOS'       //此处注意大小写
             }
-        ],
-        campusOption:["卫津路","北洋园"],
-        roleOption:["站长","组长","组员","实习","骨灰"],
-        manOption:["尼古拉斯凯奇","赵四","S1mple","猕猴桃"],
-        createForm:{
-            name:'',
-            describe:'',
-        },
-        grouper:{
-            user_id : '',
-            name : '',
-            group : '',
-            campus:'',
-            role:'',
-        },
+            ],
+            campusOption:["卫津路","北洋园"],
+            roleOption:["站长","组长","组员","实习","骨灰"],
+            createForm:{
+                title:'',
+                description:'',
+            },
+            grouper:{
+                user_id : '',
+                group : '',
+                campus:'',
+                role:'',
+            },
+            grouperOnly:{
+                project_id:'',
+                user_id : '',
+                group : '',
+                name:'',
+            },
+            data:[],
+            selesctData:[],
+            addMem:[]
         }
+    },
+    methods:{
+        fetchData(){
+            getUserDatum().then( res=>{
+                res.data.data.forEach(elem => {
+                    this.data.push(elem)
+                });
+            })
+        },
+        handleAdd(){
+            let obj
+            this.selesctData.forEach(elem =>{
+                if(elem.name==this.grouperOnly.name){
+                    obj={
+                        project_id:'',
+                        user_id : elem.id,
+                        group : elem.group_name,
+                        name:elem.name,
+                    }
+                }
+            })
+            let flag=true;
+            this.addMem.forEach( elem =>{
+                if(elem.user_id==obj.user_id){
+                    flag=false;
+                }
+            })
+            if(flag){
+                this.addMem.push(obj)
+            }else{
+                this.$message({
+                    message:'已添加该成员',
+                    type:"error",
+                    duration:5000
+                })
+            }
+        },
+        handleClose(index){
+            this.addMem.splice(index,1)
+        },
+        handleSub(){
+            const loading = this.$loading({
+            lock: true,
+            text: '创建中',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+            });
+            createProject(this.createForm).then( res=>{
+                this.addMem.forEach(elem =>{
+                    elem.project_id=res.data.project_id
+                })
+                let data=null
+                data={...this.addMem}
+                //let pData={
+                //    data:data,
+                //    project_id:res.data.project_id
+                //}
+                data.project_id=res.data.project_id
+                 window.console.log(data)
+                addMember(data).then( ()=>{
+                    loading.close()
+                }).catch( () =>{
+                loading.close()
+                this.$message({
+                    message:'添加成员失败',
+                    type:"error",
+                    duration:5000
+                })
+            })
+            }).catch( (code) =>{
+                loading.close()
+                this.$message({
+                    message:'创建失败'+code,
+                    type:"error",
+                    duration:5000
+                })
+            })
+        }
+    },
+    created(){
+        this.fetchData();
+    },
+    watch:{
+        grouper:{
+            handler(val){
+                this.grouperOnly.name=''
+                this.selesctData.length=0;
+                this.data.forEach(elem=>{
+                    if((val.role==""||val.role==elem.group_role)&&(val.campus==""||val.campus==elem.campus)&&(val.group==""||val.group==elem.group_name)){
+                        this.selesctData.push(elem)
+                    }
+                })
+            },
+            deep:true
+        },
     }
-
 }
 </script>
 
 <style scoped>
+
+    .dialog-mem >>> .el-tag{
+        height: 34px;
+        border-radius: 17px;
+        line-height:36px;
+        font-size: 14px;
+        background-color: #F1F2F9;
+        margin-right: 8px;
+        margin-bottom: 8px;
+    }
+
+    .el-dialog .dialog-mem{
+        margin-left: 228px;
+        padding-right: 120px;
+        min-height: 48px;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction:row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
 
     .form-tag{
         width: 160px;
@@ -135,6 +271,7 @@ export default {
     .main-container >>> .el-dialog{
         background:rgba(252,254,255,1);
         border-radius:20px;
+        min-height: 428px;
     }
 
     .create-button:hover{

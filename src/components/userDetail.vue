@@ -44,8 +44,8 @@
                         <span class="left-span">{{userInfo.group_role}}</span>
                     </div>
                     <div class="left-line">
-                        电话
-                        <span class="left-span">110</span>
+                        邮箱
+                        <span class="left-span">{{email}}</span>
                     </div>
                 </div>
                 <div class="userinfo-right">
@@ -121,7 +121,7 @@
 
 <script>
 import head from '../assets/vue.png'
-import {getHead,uploadHead,changePassword} from '../api/user'
+import {getHead,uploadHead,changePassword,getComplex} from '../api/user'
 
 export default {
     name: "userDetail",
@@ -136,6 +136,7 @@ export default {
         }
       };
         return {
+            email:'',
             head,
             file:[],
             userInfo:this.$store.getters.userInfo,
@@ -239,6 +240,13 @@ export default {
                     this.$message.error('上传失败'+error);
                 })
             }
+        },
+        getEmail(){
+            getComplex({
+                id:this.userInfo.id
+            }).then(res =>{
+                this.email=res.data.student[0].email
+            })
         }
     },
     mounted(){
@@ -247,10 +255,13 @@ export default {
                 new Uint8Array(res.data)
                   .reduce((data, byte) => data + String.fromCharCode(byte), '')
             );
-        }).then(data => {
-            this.head=data;
-        })
-            }
+            }).then(data => {
+                this.head=data;
+            })
+        },
+        created(){
+            this.getEmail()
+        }
 };
 </script>
 <style scoped>

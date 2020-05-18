@@ -89,6 +89,43 @@ export function ShowMyProject(){
     return request({
         url:'/api/project/ShowMyProject',
         method: 'GET',
-        headers: {'action': 'receive message'},
+        headers: {'action': 'get own project'},
+    })
+}
+
+export function getOnline(){
+    return request({
+        url:'/api/user/OnlineStatus',
+        method: 'GET',
+        headers: {'action': 'get online user'},
+    })
+}
+
+export function getUserDatum(){
+    return request({
+        url:'/api/project/GetUserDatum',
+        method: 'GET',
+        headers: {'action': "get users'message"},
+    })
+}
+
+export function createProject(data){
+    return request({
+        url:'/api/project/CreateProject',
+        method: 'POST',
+        headers: {'action': "create project"},
+        data
+    })
+}
+
+export function addMember(data){
+    return request({
+        url:'/api/project/AddMember',
+        method: 'POST',
+        headers: {
+            'action': "manage all projects",
+            'Content-Type' : 'application/json'
+            },
+        data
     })
 }

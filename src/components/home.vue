@@ -27,7 +27,7 @@
           </div>
           <div class="weekly-main">
             <div class="weekly-div-first weekly-div">第202015周报:<span v-if="!userInfo.WeekPublicationSituation" class="sub-status">未提交</span><span v-if="userInfo.WeekPublicationSituation" class="sub-status">已提交</span></div>
-            <div class="weekly-div-second weekly-div">起止日期：2020/04/07～2020/04/13（美东时间）</div>
+            <div class="weekly-div-second weekly-div">起止日期：{{getWeekStartDate()}}～{{getWeekEndDate()}}</div>
             <div class="weekly-div-third weekly-div">
               周报截止日期为每周周一，在时间范围内可以进行编辑。<br/>超过时间的周报不能进行编辑。
               <button class="write-weekly-button">去编辑周报>></button>
@@ -81,7 +81,7 @@
   </div>
 </template>
 <script>
-import {getHead,getComplex,getMessage,UpdateRead} from '../api/user'
+import {getHead,getComplex,getMessage,UpdateRead,ShowMyProject,getOnline} from '../api/user'
 import head from '../assets/vue.png'
 import message2x from '../assets/message2x.png'
 import weekly2x from '../assets/weekly2x.png'
@@ -108,12 +108,12 @@ export default {
       },
       messages:[],
         projNum:{
-          doing:3,
-          done:3,
+          doing:0,
+          done:0,
         },
         group:{
-          total:10,
-          myGroup:2,
+          total:0,
+          myGroup:0,
         }
     };
   },
@@ -123,9 +123,33 @@ export default {
       },
       toUserDetail(){
           this.$router.push('/main/userDetail')
+      },
+      getWeekStartDate() { 
+        let nowTemp = new Date();//当前时间
+        let oneDayLong = 24*60*60*1000 ;//一天的毫秒数
+        let c_time = nowTemp.getTime() ;//当前时间的毫秒时间
+        let c_day = nowTemp.getDay()||7;//当前时间的星期几
+        let m_time = c_time - (c_day-1)*oneDayLong;//当前周一的毫秒时间
+        let monday = new Date(m_time);//设置周一时间对象
+        let m_year = monday.getFullYear();
+        let m_month = monday.getMonth()+1;
+        let m_date = monday.getDate();
+        return (m_year+'-'+m_month+'-'+m_date)
+      },
+      getWeekEndDate(){
+        let nowTemp = new Date();//当前时间
+        let oneDayLong = 24*60*60*1000 ;//一天的毫秒数
+        let c_time = nowTemp.getTime() ;//当前时间的毫秒时间
+        let c_day = nowTemp.getDay()||7;//当前时间的星期几
+        let m_time = c_time - (c_day-1)*oneDayLong;//当前周一的毫秒时间
+        let monday = new Date(m_time);//设置周一时间对象
+        let m_year = monday.getFullYear();
+        let m_month = monday.getMonth()+1;
+        let m_date = monday.getDate();
+        return (m_year+'-'+m_month+'-'+(m_date+6))
       }
-  },
-  mounted(){
+    },
+    mounted(){
     getHead().then(res => {
             return 'data:image/png;base64,' + btoa(
                 new Uint8Array(res.data)
@@ -207,6 +231,32 @@ export default {
         }
       }
     })
+    ShowMyProject().then(res=>{
+        if(res.data.error_code != 1){
+            res.data.data.forEach(item => {
+                if(item[0].rate==1){
+                    this.projNum.done++
+                }else{
+                    this.projNum.doing++
+                }
+            })
+        }
+    }).catch((e)=>{
+        if(e==1){
+            this.group={
+                total:0,
+                myGroup:0,
+            }
+        }
+    })
+    getOnline().then(res =>{
+        this.group.total=Object.getOwnPropertyNames(res.data.online).length
+        for(let x in res.data.online){
+            if(res.data.online[x]=='online'){
+                this.group.myGroup++
+            }
+        }
+    })
   },
   watch:{
     messageBig:{
@@ -226,6 +276,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 
   .group-button:hover,.group-button:focus{

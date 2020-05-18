@@ -58,16 +58,16 @@
 <script>
 import cloudHeader from './cloudHeader'
 
-import check from '../assets/check.png'
-import cloudpan from '../assets/cloudpan.png'
-import discussion from '../assets/discussion.png'
-import logout from '../assets/logout.png'
-import meeting from '../assets/meeting.png'
-import message from '../assets/message.png'
-import more from '../assets/more.png'
-import project from '../assets/project.png'
-import weekly from '../assets/weekly.png'
-import home from '../assets/home.png'
+import check from '../assets/check2x.png'
+import cloudpan from '../assets/cloudpan2x.png'
+import discussion from '../assets/discussion2x.png'
+import logout from '../assets/logout2x.png'
+import meeting from '../assets/meeting2x.png'
+import message from '../assets/message2x.png'
+import more from '../assets/more2x.png'
+import project from '../assets/project2x.png'
+import weekly from '../assets/weekly2x.png'
+import home from '../assets/home2x.png'
 
 export default {
     components:{
