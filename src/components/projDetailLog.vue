@@ -39,6 +39,7 @@ export default {
         width:100%;
         min-height:14px;
         margin-bottom: 24px;
+        text-align: left;
     }
 
     .log-container{

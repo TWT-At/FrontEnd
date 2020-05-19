@@ -42,47 +42,18 @@
 </template>
 
 <script>
+import {ShowSpecifiedProject} from '../api/user'
+
 export default {
     name:'projDetail',
     data (){
         return{
-        navKey:1,
-        ID:this.$store.getters.projDetailID,
-        ProjDetail: {
-        title: "at系统开发",
-        description: "天外天新人at系统开发",
-        process: "已完成首页、周报、日志接口；\r\n完成部分管理员接口；\r\n",
-        member: [
-            {
-                name: "齐呈祥",
-                group_name: "程序组",
-                permission: 1,
-                created_at: "2020-04-21 17:26:11"
+            navKey:1,
+            ID:this.$store.getters.projDetailID,
+            ProjDetail: {
+                title:'',
+                member:[]
             },
-            {
-                name: "高树韬",
-                group_name: "前端组",
-                permission: 0,
-                created_at: "2020-04-21 17:26:11"
-            }
-        ],
-        task: [
-            {
-                name: "齐呈祥",
-                title: "项目管理",
-                description: "项目管理",
-                process: "正在做",
-                created_at: "2020-04-21 17:37:56"
-            }
-        ],
-        log: [
-            {
-                name: "齐呈祥",
-                description: "新增了项目",
-                update_at: "2020-04-21 17:41:56"
-            }
-        ]
-    }
         }
     },
     methods:{
@@ -105,7 +76,6 @@ export default {
         },
         handleNav(key){
             this.navKey=key
-            this.$store.dispatch('user/setProjInfo',this.ProjDetail)
             switch(key){
                 case 1:
                     this.$router.push('/main/projMain/projDetail/projDetailMem').catch(err=>{
@@ -128,11 +98,19 @@ export default {
             }else{
                 return ''
             }
-        }
+        },
+        getComplex(){
+        ShowSpecifiedProject({project_id:this.ID.id}).then( res=>{
+            this.ProjDetail=res.data.data
+            this.$store.dispatch('user/setProjInfo',this.ProjDetail)
+        })
+    }
     },
     created(){
         this.handleNav(1)
-    }
+        this.getComplex()
+    },
+    
 }
 </script>
 

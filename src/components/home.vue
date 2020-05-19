@@ -170,7 +170,7 @@ export default {
     })
     getMessage().then( res=>{
       if(res.status === 200){
-        let {data} = res.data;
+        let data = res.data.data.slice(0,14);
         data.forEach(elem =>{
           if(elem.read == 0){
             this.messageNum++

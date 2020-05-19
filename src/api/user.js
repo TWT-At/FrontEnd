@@ -129,3 +129,15 @@ export function addMember(data){
         data
     })
 }
+
+export function ShowSpecifiedProject(data){
+    return request({
+        url:'/api/project/ShowSpecifiedProject',
+        method: 'POST',
+        headers: {
+            'action': "get own project",
+            },
+        data
+    })
+}
+

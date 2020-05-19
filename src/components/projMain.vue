@@ -184,7 +184,6 @@ export default {
                     data:data,
                     project_id:res.data.project_id
                 }
-                //window.console.log( pData)
                 addMember( pData).then( ()=>{
                     loading.close()
                     this.$message({

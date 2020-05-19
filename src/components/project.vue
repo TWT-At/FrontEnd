@@ -33,7 +33,7 @@
 </template>
 
 <script>
-//import {ShowMyProject} from '../api/user'
+import {ShowMyProject,ShowSpecifiedProject} from '../api/user'
 
 export default {
   name: 'project',
@@ -57,17 +57,6 @@ export default {
                     {title:"完成原型图",time:"2020-4-44"},
                 ]
             },
-            {   id: 2,
-                name: "齐呈祥",
-                title: "at系统开发",
-                created_at: "2020-04-14 12:24:54",
-                finish_at: "2020-04-14 12:24:54",
-                rate:1,
-                DDL:[
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"}
-                ]
-            }
         ]
     }
   },
@@ -87,12 +76,22 @@ export default {
         }
     },
     handleClick(proj){
-       this.$store.dispatch('user/setProjDetailID',proj)
-       this.$router.push('/main/projMain/projDetail/projDetailMem')
+        this.$store.dispatch('user/setProjDetailID',proj)
+         ShowSpecifiedProject({project_id:proj.id}).then( res=>{
+            this.$store.dispatch('user/setProjInfo',res.data.data)
+            this.$router.push('/main/projMain/projDetail/projDetailMem')
+        })
+    },
+    getMyproj(){
+        ShowMyProject().then( res=> {
+            res.data.data.forEach(elem => {
+                this.data.push(elem[0])
+            });
+        })
     }
   }
   ,created(){
-
+      this.getMyproj()
   }
 };
 </script>
