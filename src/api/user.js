@@ -141,3 +141,71 @@ export function ShowSpecifiedProject(data){
     })
 }
 
+export function getMemberDatum(data){
+    return request({
+        url:'/api/project/GetMemberDatum',
+        method: 'POST',
+        headers: {
+            'action': "get own project",
+            },
+        data
+    })
+}
+
+export function createTask(data){
+    return request({
+        url:'/api/project/CreateTask',
+        method: 'POST',
+        headers: {
+            'action': "get own project",
+            },
+        data
+    })
+}
+
+export function createOtherTask(data){
+    return request({
+        url:'/api/project/CreateOtherTask',
+        method: 'POST',
+        headers: {
+            'action': "manage all projects",
+            },
+        data
+    })
+}
+
+export function deleteMember(data){
+    return request({
+        url:'/api/project/DeleteMember',
+        method: 'POST',
+        headers: {
+            'action': "manage all projects",
+            },
+        data
+    })
+}
+
+export function transferLeader(data){
+    return request({
+        url:'/api/project/TransferLeader',
+        method: 'POST',
+        headers: {
+            'action': "manage all projects",
+            },
+        data
+    })
+}
+
+export function finsihProject(data){
+    return request({
+        url:'/api/project/FinsihProject',
+        method: 'POST',
+        headers: {
+            'action': "manage all projects",
+            },
+        data
+    })
+}
+
+
+

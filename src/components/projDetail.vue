@@ -28,7 +28,7 @@
         v-model="ProjDetail.description">
     </el-input>
     <div class="finish-div">
-        <button class="my-button finish-button">项目完结</button>
+        <button class="my-button finish-button" @click="finishProj">项目完结</button>
     </div>
     <div class="nav-div">
         <button :id="handleStyle(1)" class="nav-button nav-mem" @click="handleNav(1)">项目成员</button>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {ShowSpecifiedProject} from '../api/user'
+import {ShowSpecifiedProject,finsihProject} from '../api/user'
 
 export default {
     name:'projDetail',
@@ -100,11 +100,24 @@ export default {
             }
         },
         getComplex(){
-        ShowSpecifiedProject({project_id:this.ID.id}).then( res=>{
-            this.ProjDetail=res.data.data
-            this.$store.dispatch('user/setProjInfo',this.ProjDetail)
-        })
-    }
+            ShowSpecifiedProject({project_id:this.ID.id}).then( res=>{
+                this.ProjDetail=res.data.data
+                this.$store.dispatch('user/setProjInfo',this.ProjDetail)
+            })
+        },
+        finishProj(){
+            finsihProject({
+                project_id:this.$store.getters.projDetailID.id
+            }).then(()=>
+               { this.$message({
+                    message:'已完结任务',
+                    type:"success",
+                    duration:5000
+                })
+                this.$router.push('/main/projMain/project')
+                }
+            )
+        }
     },
     created(){
         this.handleNav(1)

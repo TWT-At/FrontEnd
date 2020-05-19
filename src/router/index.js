@@ -69,6 +69,8 @@ router.beforeEach((to,from,next) =>{
     next()
   }else if(!store.getters.token) {
     next('/login')
+  }else if (!store.getters.projDetailID&&to.path.split('/')[3]=='projDetail'){
+    next('/main/projMain/project')
   }else if (!store.getters.userInfo) {
     store.dispatch('user/getInfo').then(() => {
         next()

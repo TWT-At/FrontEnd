@@ -2,7 +2,7 @@
   <div class="main-div">
       <div class="button-div">
           <div class="task-num">任务（{{projInfo.task.length}}）</div>
-          <button class="head-button">新建任务</button>
+          <button class="head-button" @click="dialogVisible=true">新建任务</button>
       </div>
       <div class="task-item" v-for="(task,index) in projInfo.task" :key=index>
           <div class="item-head">
@@ -15,6 +15,31 @@
               <img class="online-img" :src=doing2x>
           </div>
       </div>
+      <el-dialog
+        title="新建TASK"
+        :visible.sync="dialogVisible"
+        width="45%">
+            <div class="task-title create-item"><span class="title-span">名称：</span><el-input v-model="taskInfo.title" placeholder="名称"></el-input></div>
+            <div class="task-ddl create-item"><span class="title-span">DDL：</span><el-date-picker
+                v-model="time"
+                type="datetime"
+                value-format="timestamp"
+                placeholder="选择日期时间">
+                </el-date-picker>
+            </div>
+            <div class="task-mem create-item"><span class="title-span">项目成员：</span>
+                <el-select v-model="value" v-if="!!myPermition" placeholder="请选择成员">
+                    <el-option
+                    v-for="item in options"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name">
+                    </el-option>
+                </el-select>
+                <span class="self-span" v-if="!myPermition">自己</span>
+            </div>
+            <button class="create-button" @click="handleSub">确认录入</button>
+        </el-dialog>
   </div>
 </template>
 
@@ -22,21 +47,154 @@
 import doing2x from '../assets/doing2x.png'
 import finish2x from '../assets/finish2x.png'
 
+import {getMemberDatum,createTask,createOtherTask} from '../api/user'
+
 export default {
   name: "ProjDetailMem",
   data() {
     return {
+        dialogVisible: false,
         doing2x,
         finish2x,
       projInfo:this.$store.getters.projInfo,
+      taskInfo:{
+          title:'',
+          description:''
+      },
+      value:'',
+      time:NaN,
+      options:[],
+      myPermition:0
     }
   },
   methods:{
-
+      getOptions(){
+          getMemberDatum({project_id:this.$store.getters.projDetailID.id}).then( res=>{
+              this.options=res.data.data
+              res.data.data.forEach(elem=>{
+                  if(elem.user_id==this.$store.getters.userInfo.id){
+                      this.myPermition=1
+                  }
+              })
+          })
+      },
+      handleSub(){
+          switch (this.myPermition){
+              case 1:
+                  createOtherTask({
+                      project_id:this.$store.getters.projDetailID.id,
+                      name:this.value,
+                      title:this.taskInfo.title,
+                      description:this.taskInfo.description,
+                      time:this.time
+                  }).then( ()=>{
+                    this.$message({
+                    message:'添加成功',
+                    type:"success",
+                    duration:5000
+                    })
+                }).catch(()=>{
+                    this.$message({
+                    message:'添加失败',
+                    type:"error",
+                    duration:5000
+                })})
+                break;
+            case 0:
+                createTask({
+                    project_id:this.$store.getters.projDetailID.id,
+                    title:this.taskInfo.title,
+                    description:this.taskInfo.description,
+                    time:this.time
+                }).then( ()=>{
+                    this.$message({
+                    message:'添加成功',
+                    type:"success",
+                    duration:5000
+                    })
+                }).catch(()=>{
+                    this.$message({
+                    message:'添加失败',
+                    type:"error",
+                    duration:5000
+                })})
+                break;
+            default:break;
+          }
+      }
+  },
+  created(){
+      this.getOptions()
+  },
+  watch:{
+      'taskInfo.title':{
+          handler(val){
+              this.taskInfo.description=val;
+          },
+          deep:true
+      }
   }
 };
 </script>
 <style scoped>
+
+    .create-button:hover{
+        cursor: pointer;
+        background:#13283C;
+    }
+
+    .create-button{
+        transition: all .2s;
+        outline: none;
+        border: none;
+        width:190px;
+        height:48px;
+        background:rgba(59,76,93,1);
+        box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), 3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px -3px 5px 0px rgba(0, 0, 0, 0.1);
+        border-radius:24px;
+        font-size:24px;
+        font-family:Microsoft YaHei;
+        font-weight:bold;
+        color:rgba(252,254,255,1);
+        line-height:37px;
+    }
+
+    .task-mem>>> .el-input{
+        width: 604px;
+    }
+
+    .self-span{
+        width: 604px;
+        text-align: center;
+    }
+
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+        width: 604px;
+    }
+
+    .task-title >>> .el-input{
+        width: 604px;
+    }
+
+    .create-item{
+        text-align: left;
+        width: 100%;
+        padding-left: 60px;
+        padding-right: 60px;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .title-span{
+        font-size:16px;
+        font-family:Microsoft YaHei;
+        font-weight:bold;
+        color:rgba(61,75,89,1);
+    }
 
     .item-end{
         color: #A20404;
@@ -89,6 +247,7 @@ export default {
         box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius:10px;
         position: relative;
+        margin-bottom: 18px;
     }
 
 

@@ -107,6 +107,7 @@ export default {
       messageBig:{
       },
       messages:[],
+      messagesCopy:[],
         projNum:{
           doing:0,
           done:0,
@@ -227,6 +228,14 @@ export default {
             checked:!!elem.read,
             time:time
             })
+            this.messagesCopy.push({
+            id:elem.id,
+            type:elem.type,
+            title:elem.title,
+            message:elem.message,
+            checked:!!elem.read,
+            time:time
+            })
           })
         }
       }
@@ -268,7 +277,11 @@ export default {
     messages:{
       handler(val){
         for(let i=0;i<this.messages.length;i++){
-            UpdateRead({message_id:val[i].id,status:Number(val[i].checked)})
+            if(val[i].checked!=this.messagesCopy[i].checked){
+            UpdateRead({message_id:val[i].id,status:Number(val[i].checked)}).then(()=>{
+              this.messagesCopy[i].checked=!this.messagesCopy[i].checked
+            })
+            }
         }
       },
       deep:true

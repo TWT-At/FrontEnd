@@ -1,10 +1,10 @@
 # Details
 
-Date : 2020-05-18 23:35:47
+Date : 2020-05-19 17:01:46
 
 Directory d:\at\twtat
 
-Total : 34 files,  16429 codes, 20 comments, 436 blanks, all 16885 lines
+Total : 34 files,  16760 codes, 15 comments, 459 blanks, all 17234 lines
 
 [summary](results.md)
 
@@ -18,7 +18,7 @@ Total : 34 files,  16429 codes, 20 comments, 436 blanks, all 16885 lines
 | [public/index.html](/public/index.html) | HTML | 16 | 1 | 1 | 18 |
 | [src/App.vue](/src/App.vue) | Vue | 34 | 0 | 8 | 42 |
 | [src/api/admin.js](/src/api/admin.js) | JavaScript | 8 | 0 | 1 | 9 |
-| [src/api/user.js](/src/api/user.js) | JavaScript | 116 | 0 | 15 | 131 |
+| [src/api/user.js](/src/api/user.js) | JavaScript | 136 | 0 | 19 | 155 |
 | [src/components/admin/adminHome.vue](/src/components/admin/adminHome.vue) | Vue | 302 | 0 | 21 | 323 |
 | [src/components/admin/adminMain.vue](/src/components/admin/adminMain.vue) | Vue | 162 | 1 | 21 | 184 |
 | [src/components/cloudHeader.vue](/src/components/cloudHeader.vue) | Vue | 37 | 0 | 6 | 43 |
@@ -26,12 +26,12 @@ Total : 34 files,  16429 codes, 20 comments, 436 blanks, all 16885 lines
 | [src/components/home.vue](/src/components/home.vue) | Vue | 629 | 0 | 53 | 682 |
 | [src/components/main.vue](/src/components/main.vue) | Vue | 184 | 10 | 22 | 216 |
 | [src/components/messagePage.vue](/src/components/messagePage.vue) | Vue | 24 | 0 | 1 | 25 |
-| [src/components/projDetail.vue](/src/components/projDetail.vue) | Vue | 339 | 0 | 30 | 369 |
-| [src/components/projDetailLog.vue](/src/components/projDetailLog.vue) | Vue | 73 | 0 | 9 | 82 |
-| [src/components/projDetailMem.vue](/src/components/projDetailMem.vue) | Vue | 185 | 0 | 23 | 208 |
-| [src/components/projDetailTask.vue](/src/components/projDetailTask.vue) | Vue | 127 | 0 | 16 | 143 |
-| [src/components/projMain.vue](/src/components/projMain.vue) | Vue | 366 | 5 | 25 | 396 |
-| [src/components/project.vue](/src/components/project.vue) | Vue | 190 | 1 | 16 | 207 |
+| [src/components/projDetail.vue](/src/components/projDetail.vue) | Vue | 315 | 0 | 32 | 347 |
+| [src/components/projDetailLog.vue](/src/components/projDetailLog.vue) | Vue | 74 | 0 | 9 | 83 |
+| [src/components/projDetailMem.vue](/src/components/projDetailMem.vue) | Vue | 438 | 0 | 36 | 474 |
+| [src/components/projDetailTask.vue](/src/components/projDetailTask.vue) | Vue | 200 | 0 | 21 | 221 |
+| [src/components/projMain.vue](/src/components/projMain.vue) | Vue | 373 | 1 | 25 | 399 |
+| [src/components/project.vue](/src/components/project.vue) | Vue | 191 | 0 | 15 | 206 |
 | [src/components/userDetail.vue](/src/components/userDetail.vue) | Vue | 497 | 0 | 36 | 533 |
 | [src/main.js](/src/main.js) | JavaScript | 13 | 0 | 5 | 18 |
 | [src/router/index.js](/src/router/index.js) | JavaScript | 81 | 1 | 7 | 89 |

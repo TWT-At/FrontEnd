@@ -7,17 +7,17 @@
               <span v-if="!selected">选择成员</span>
               <span v-if="selected">取消</span>
           </button>
-          <button v-if="selected" class="head-button move-head-button">转让组长</button>
-          <button v-if="selected" class="head-button remove-button">移除成员</button>
+          <button v-if="selected" @click="changeGroupHead" class="head-button move-head-button">转让组长</button>
+          <button v-if="selected" @click="removeMem" class="head-button remove-button">移除成员</button>
       </div>
-      <div class="mem-item" v-for="(mem,index) in projInfo.member" :key=index>
+      <div class="mem-item" v-on:click="handleChoose(index,mem)" v-for="(mem,index) in projInfo.member" :key=index>
           <div class="item-head">
               <el-progress type="circle" :width=50 :stroke-width=2 :show-text=false :percentage="25"></el-progress>
               <img :src="head" class="img-head">
-              <div class="item-title">组员：{{mem.name}}（{{mem.group_name}}）</div>
+              <div class="item-title"><span>{{getRole()}}</span>：{{mem.name}}（{{mem.group_name}}）</div>
               <div class="item-line"></div>
               <div class="item-time">加入项目时间：{{mem.created_at}}</div>
-              <div class="item-task">任务数7/9</div>
+              <div class="item-task">任务数:{{mem.task_num}}</div>
               <img class="online-img" :src=doing2x>
           </div>
       </div>
@@ -78,16 +78,18 @@
 </template>
 
 <script>
-import head from '../assets/vue.png'
+import head from '../assets/member2x.png'
 import doing2x from '../assets/doing2x.png'
 import finish2x from '../assets/finish2x.png'
 
-import {getUserDatum,addMember} from '../api/user.js'
+import {getUserDatum,addMember,deleteMember,transferLeader} from '../api/user.js'
 
 export default {
   name: "ProjDetailMem",
   data() {
     return {
+        selectedIndex:NaN,
+        selectedMem:null,
         addVisible: false,
         selected:false,
         doing2x,
@@ -135,7 +137,7 @@ export default {
     }
   },
   methods:{
-      fetchData(){
+       fetchData(){
             getUserDatum().then( res=>{
                 res.data.data.forEach(elem => {
                     this.data.push(elem)
@@ -207,6 +209,60 @@ export default {
                     duration:5000
                 })
             })
+        },
+        handleChoose(index,mem){
+            if(this.selected){
+                let o=window.document.getElementsByClassName('mem-item')
+                o.forEach(elem=>{
+                    elem.style.backgroundColor='#fff'
+                    elem.style.cursion='pointer'
+                })
+                o[index].style.backgroundColor='#CCD1D6'
+                this.selectedMem=mem
+                this.selectedIndex=index
+            }
+        },
+        removeMem(){
+            deleteMember({
+                project_id:this.$store.getters.projDetailID.id,
+                name:this.selectedMem.name,
+                user_id:this.selectedMem.member_id
+            }).then(()=>{
+                this.projInfo.member.slice(this.selectedIndex,1)
+                this.$message({
+                    message:'删除成员成功',
+                    type:"success",
+                    duration:5000
+                })
+            }).catch(()=>{
+                    this.$message({
+                    message:'删除成员失败',
+                    type:"error",
+                    duration:5000
+                })
+            })
+        },
+        changeGroupHead(){
+            transferLeader({
+                project_id:this.$store.getters.projDetailID.id,
+                name:this.selectedMem.name,
+                user_id:this.selectedMem.member_id
+            }).then(()=>{
+                this.$message({
+                    message:'转让组长成功',
+                    type:"success",
+                    duration:5000
+                })
+            }).catch(()=>{
+                    this.$message({
+                    message:'转让组长失败',
+                    type:"error",
+                    duration:5000
+                })
+            })
+        },
+        getRole(){
+            return '组员'
         }
     },
     created(){
@@ -386,13 +442,19 @@ export default {
         left:22px;
     }
 
+    .mem-item:hover{
+        cursor: pointer;
+    }
+
     .mem-item{
+        transition: all .2s;
         width:524px;
         height:72px;
         background:rgba(252,254,255,1);
         box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius:10px;
         position: relative;
+        margin-bottom: 18px;
     }
 
     .button-div >>> .remove-button:hover{
@@ -409,7 +471,7 @@ export default {
     }
 
     .move-head-button{
-        margin-left: 592px;
+        margin-left: 572px;
     }
 
     .select-button{
