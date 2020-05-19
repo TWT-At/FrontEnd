@@ -1,14 +1,14 @@
-Date : 2020-05-14 22:24:44
+Date : 2020-05-18 23:35:47
 Directory : d:\at\twtat
-Total : 33 files,  16205 codes, 15 comments, 420 blanks, all 16640 lines
+Total : 34 files,  16429 codes, 20 comments, 436 blanks, all 16885 lines
 
 Languages
 +------------+------------+------------+------------+------------+------------+
 | language   | files      | code       | comment    | blank      | total      |
 +------------+------------+------------+------------+------------+------------+
 | JSON       |          2 |     12,053 |          0 |          2 |     12,055 |
-| Vue        |         17 |      3,719 |         12 |        351 |      4,082 |
-| JavaScript |         12 |        391 |          2 |         58 |        451 |
+| Vue        |         18 |      3,905 |         17 |        363 |      4,285 |
+| JavaScript |         12 |        429 |          2 |         62 |        493 |
 | Markdown   |          1 |         26 |          0 |          8 |         34 |
 | HTML       |          1 |         16 |          1 |          1 |         18 |
 +------------+------------+------------+------------+------------+------------+
@@ -17,17 +17,17 @@ Directories
 +------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                           | files      | code       | comment    | blank      | total      |
 +------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                              |         33 |     16,205 |         15 |        420 |     16,640 |
+| .                                              |         34 |     16,429 |         20 |        436 |     16,885 |
 | public                                         |          1 |         16 |          1 |          1 |         18 |
-| src                                            |         27 |      4,094 |         14 |        408 |      4,516 |
-| src\api                                        |          2 |         91 |          0 |         12 |        103 |
-| src\components                                 |         13 |      3,405 |         12 |        309 |      3,726 |
+| src                                            |         28 |      4,318 |         19 |        424 |      4,761 |
+| src\api                                        |          2 |        124 |          0 |         16 |        140 |
+| src\components                                 |         14 |      3,589 |         17 |        321 |      3,927 |
 | src\components\admin                           |          2 |        464 |          1 |         42 |        507 |
-| src\router                                     |          1 |         78 |          1 |          7 |         86 |
+| src\router                                     |          1 |         81 |          1 |          7 |         89 |
 | src\store                                      |          4 |        111 |          0 |         22 |        133 |
 | src\store\modules                              |          2 |         88 |          0 |         15 |        103 |
-| src\utils                                      |          2 |         82 |          1 |         11 |         94 |
-| src\views                                      |          3 |        280 |          0 |         34 |        314 |
+| src\utils                                      |          2 |         84 |          1 |         11 |         96 |
+| src\views                                      |          3 |        282 |          0 |         34 |        316 |
 +------------------------------------------------+------------+------------+------------+------------+------------+
 
 Files
@@ -41,31 +41,32 @@ Files
 | d:\at\twtat\public\index.html                  | HTML       |         16 |          1 |          1 |         18 |
 | d:\at\twtat\src\App.vue                        | Vue        |         34 |          0 |          8 |         42 |
 | d:\at\twtat\src\api\admin.js                   | JavaScript |          8 |          0 |          1 |          9 |
-| d:\at\twtat\src\api\user.js                    | JavaScript |         83 |          0 |         11 |         94 |
+| d:\at\twtat\src\api\user.js                    | JavaScript |        116 |          0 |         15 |        131 |
 | d:\at\twtat\src\components\admin\adminHome.vue | Vue        |        302 |          0 |         21 |        323 |
 | d:\at\twtat\src\components\admin\adminMain.vue | Vue        |        162 |          1 |         21 |        184 |
 | d:\at\twtat\src\components\cloudHeader.vue     | Vue        |         37 |          0 |          6 |         43 |
-| d:\at\twtat\src\components\grouper.vue         | Vue        |        557 |          0 |         42 |        599 |
-| d:\at\twtat\src\components\home.vue            | Vue        |        579 |          0 |         52 |        631 |
+| d:\at\twtat\src\components\grouper.vue         | Vue        |        474 |          0 |         42 |        516 |
+| d:\at\twtat\src\components\home.vue            | Vue        |        629 |          0 |         53 |        682 |
 | d:\at\twtat\src\components\main.vue            | Vue        |        184 |         10 |         22 |        216 |
 | d:\at\twtat\src\components\messagePage.vue     | Vue        |         24 |          0 |          1 |         25 |
-| d:\at\twtat\src\components\projDetail.vue      | Vue        |        336 |          0 |         30 |        366 |
+| d:\at\twtat\src\components\projDetail.vue      | Vue        |        339 |          0 |         30 |        369 |
+| d:\at\twtat\src\components\projDetailLog.vue   | Vue        |         73 |          0 |          9 |         82 |
 | d:\at\twtat\src\components\projDetailMem.vue   | Vue        |        185 |          0 |         23 |        208 |
 | d:\at\twtat\src\components\projDetailTask.vue  | Vue        |        127 |          0 |         16 |        143 |
-| d:\at\twtat\src\components\projMain.vue        | Vue        |        236 |          0 |         23 |        259 |
+| d:\at\twtat\src\components\projMain.vue        | Vue        |        366 |          5 |         25 |        396 |
 | d:\at\twtat\src\components\project.vue         | Vue        |        190 |          1 |         16 |        207 |
-| d:\at\twtat\src\components\userDetail.vue      | Vue        |        486 |          0 |         36 |        522 |
+| d:\at\twtat\src\components\userDetail.vue      | Vue        |        497 |          0 |         36 |        533 |
 | d:\at\twtat\src\main.js                        | JavaScript |         13 |          0 |          5 |         18 |
-| d:\at\twtat\src\router\index.js                | JavaScript |         78 |          1 |          7 |         86 |
+| d:\at\twtat\src\router\index.js                | JavaScript |         81 |          1 |          7 |         89 |
 | d:\at\twtat\src\store\getters.js               | JavaScript |          7 |          0 |          1 |          8 |
 | d:\at\twtat\src\store\index.js                 | JavaScript |         16 |          0 |          6 |         22 |
 | d:\at\twtat\src\store\modules\admin.js         | JavaScript |         12 |          0 |          9 |         21 |
 | d:\at\twtat\src\store\modules\user.js          | JavaScript |         76 |          0 |          6 |         82 |
 | d:\at\twtat\src\utils\auth.js                  | JavaScript |         14 |          0 |          5 |         19 |
-| d:\at\twtat\src\utils\request.js               | JavaScript |         68 |          1 |          6 |         75 |
+| d:\at\twtat\src\utils\request.js               | JavaScript |         70 |          1 |          6 |         77 |
 | d:\at\twtat\src\views\404.vue                  | Vue        |         10 |          0 |          3 |         13 |
 | d:\at\twtat\src\views\adminLogin.vue           | Vue        |        133 |          0 |         16 |        149 |
-| d:\at\twtat\src\views\login.vue                | Vue        |        137 |          0 |         15 |        152 |
+| d:\at\twtat\src\views\login.vue                | Vue        |        139 |          0 |         15 |        154 |
 | d:\at\twtat\vue.config.js                      | JavaScript |         11 |          0 |          0 |         11 |
-| Total                                          |            |     16,205 |         15 |        420 |     16,640 |
+| Total                                          |            |     16,429 |         20 |        436 |     16,885 |
 +------------------------------------------------+------------+------------+------------+------------+------------+

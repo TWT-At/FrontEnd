@@ -180,14 +180,18 @@ export default {
                 })
                 let data=null
                 data={...this.addMem}
-                //let pData={
-                //    data:data,
-                //    project_id:res.data.project_id
-                //}
-                data.project_id=res.data.project_id
-                 window.console.log(data)
-                addMember(data).then( ()=>{
+                let pData={
+                    data:data,
+                    project_id:res.data.project_id
+                }
+                //window.console.log( pData)
+                addMember( pData).then( ()=>{
                     loading.close()
+                    this.$message({
+                    message:'创建任务成功',
+                    type:"success",
+                    duration:5000
+                })
                 }).catch( () =>{
                 loading.close()
                 this.$message({
