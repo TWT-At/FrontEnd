@@ -1,8 +1,8 @@
 <template>
   <div class="main-box">
       <div class="title-div">
-          <el-progress :color="getColor" :stroke-width=6 :width=68 type="circle" :percentage=ID.rate*100></el-progress>
-          <div v-bind:style="{width:ID.rate*960+'px'}" :class="isFinish()?'finish-line':'process-line'"></div>
+          <el-progress :color="getColor" :stroke-width=6 :width=68 type="circle" :percentage=(ID.rate.toFixed(2))*100></el-progress>
+          <div v-bind:style="{width:(ID.rate.toFixed(2))*960+'px'}" :class="isFinish()?'finish-line':'process-line'"></div>
           <div class="bg-line"></div>
           <div class="proj-title">{{ProjDetail.title}}</div>
           <div class="proj-created">{{ID.created_at}}</div>

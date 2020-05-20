@@ -4,8 +4,8 @@
         <div v-for="(proj,index) in data" :key="index" class="proj-div" v-on:click="handleClick(proj)">
             <el-progress 
             type="circle" 
-            :percentage=proj.rate*100
-            :color="getColor(proj.rate)"
+            :percentage=(proj.rate.toFixed(2))*100
+            :color="getColor(proj.rate.toFixed(2))"
             :stroke-width=12
             :width=66>
             </el-progress>
@@ -44,7 +44,7 @@ export default {
                 name: "齐呈祥",
                 title: "at系统开发",
                 created_at: "2020-04-14 12:24:54",
-                rate:0.6,
+                rate:0.6123123123123,
                 DDL:[
                     {title:"完成原型图",time:"2020-4-44"},
                     {title:"完成原型图",time:"2020-4-44"},
@@ -85,6 +85,7 @@ export default {
     getMyproj(){
         ShowMyProject().then( res=> {
             res.data.data.forEach(elem => {
+                
                 this.data.push(elem[0])
             });
         })
