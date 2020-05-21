@@ -9,7 +9,7 @@
               <div class="item-title">TASK：{{task.title}}</div>
               <div class="item-line"></div>
               <div class="item-cteated">起始时间：{{task.created_at}}
-                    <span class="item-end">DDL：2019</span>
+                    <span class="item-end">DDL：{{task.deadline.split(' ')[0]}}</span>
                     <span class="item-mem">参与者：{{task.name}}</span>
                 </div>
               <img class="online-img" :src=doing2x>
