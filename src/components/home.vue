@@ -106,6 +106,8 @@ export default {
       messageNum:0,
       messageBig:{
       },
+      messageBigCopy:{
+      },
       messages:[],
       messagesCopy:[],
         projNum:{
@@ -171,7 +173,7 @@ export default {
     })
     getMessage().then( res=>{
       if(res.status === 200){
-        let data = res.data.data.slice(0,14);
+        let data = res.data.data.reverse().slice(0,14);
         data.forEach(elem =>{
           if(elem.read == 0){
             this.messageNum++
@@ -195,6 +197,14 @@ export default {
             time="刚刚"
           }
           this.messageBig={
+            id:data[0].id,
+            type:data[0].type,
+            title:data[0].title,
+            message:data[0].message,
+            checked:!!data[0].read,
+            time:time
+          }
+          this.messageBigCopy={
             id:data[0].id,
             type:data[0].type,
             title:data[0].title,
@@ -270,7 +280,16 @@ export default {
   watch:{
     messageBig:{
       handler(val){
-        UpdateRead({message_id:this.messageBig.id,status:Number(val.checked)})
+        if(val.checked!=this.messageBigCopy.checked){
+          UpdateRead({message_id:this.messageBig.id,status:Number(val.checked)}).then(()=>{
+            this.messageBigCopy.checked=this.messageBig.checked
+            if(this.messageBigCopy.checked==true){
+                this.messageNum--
+              }else{
+                this.messageNum++
+              }
+          })
+          }
       },
       deep:true
     },
@@ -280,6 +299,11 @@ export default {
             if(val[i].checked!=this.messagesCopy[i].checked){
             UpdateRead({message_id:val[i].id,status:Number(val[i].checked)}).then(()=>{
               this.messagesCopy[i].checked=!this.messagesCopy[i].checked
+              if(this.messagesCopy[i].checked==true){
+                this.messageNum--
+              }else{
+                this.messageNum++
+              }
             })
             }
         }

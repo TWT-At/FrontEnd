@@ -11,7 +11,8 @@ export function login(data) {
 export function getWeekly(data) {
     return request({
         url:'/api/GetMessage',
-        method: 'get',
+        method: 'POST',
+        headers: {'action': "get others' week publication"},
         data
     })
 }

@@ -13,7 +13,7 @@
                         <img :src="message" class="my-icon">
                         <span class="menu-title">消息</span>
                     </el-menu-item>
-                    <el-menu-item index="3">
+                    <el-menu-item index="/main/weeklyAll">
                         <img :src="weekly" class="my-icon">
                         <span class="menu-title">周报</span>
                     </el-menu-item>

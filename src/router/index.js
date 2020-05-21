@@ -50,6 +50,9 @@ Vue.use(VueRouter)
               ]
             }
           ]
+        },
+        {
+          name:'weeklyAll',path:'weeklyAll',component:() => import('../components/weeklyAll')
         }
       ]},
       {name:'adminMain' ,path:'/adminMain',component:() => import('../components/admin/adminMain'),
