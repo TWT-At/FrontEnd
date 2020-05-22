@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 import store from '../store';
 import {removeToken} from '../utils/auth'
 
+
 Vue.use(VueRouter)
+
+
 
   const routes = [
     {path: '/' , redirect: '/main/home'},
@@ -67,6 +70,7 @@ const router = new VueRouter({
   routes
 });
 
+
 router.beforeEach((to,from,next) =>{
   if(to.name === 'login') {
     next()
@@ -84,6 +88,7 @@ router.beforeEach((to,from,next) =>{
     next()
   }
 });
+
 
 export default router
 

@@ -2,7 +2,23 @@
     <div class="main-box">
         <div class="title-container">
             <div class="main-title">
-                {{getIssue()}}<span class="day-span">{{getDay()}}</span>
+                第{{getIssue()}}期周报<span class="day-span">{{getDay()}}</span>
+            </div>
+            <div class="title-div">
+                <div class="word-div">
+                    <span class="word-first">我的周报：</span>
+                    <span v-if="userInfo.WeekPublicationSituation" class="word-second">已提交</span><span v-if="!userInfo.WeekPublicationSituation" class="word-second">未提交</span>
+                    <br>
+                    <span class="word-third">
+                        周报完成情况以及组长评比将会纳入个人学期考核评比中，
+                    </span>
+                    <br>
+                    <span class="word-third">
+                        请工作室各位成员认真对待，按时完成。
+                    <button class="to-write-button">去编辑周报</button>
+                    </span>
+                    
+                </div>
             </div>
         </div>
         <div class="header-div">
@@ -46,13 +62,15 @@
 </template>
 
 <script>
-import {} from '../api/user'
+import {getWeekly} from '../api/user'
 
 export default {
     name:"grouper",
     data(){
         
         return{
+            WeekPublicationFinisherSituation:[],
+            userInfo:this.$store.getters.userInfo,
             loading:false,
             defaultActive:"3",
             options:{
@@ -118,12 +136,18 @@ export default {
             let m_month = monday.getMonth()+1;
             let m_date = monday.getDate();
             return `${m_year+'/'+m_month+'/'+m_date}~${m_year+'/'+m_month+'/'+(m_date+6)}`
+        },
+        fetchWeekly(semester){
+            getWeekly({semester:semester}).then((res)=>{
+                this.WeekPublicationFinisherSituation=res.data.WeekPublicationFinisherSituation
+            })
         }
     },
     mounted(){
     },
     created(){
-        this.getTerm()
+        this.getTerm();
+        this.fetchWeekly(`${this.options.semester[0]}-${this.options.semester[1]}`)
     },
     watch:{
         
@@ -132,6 +156,77 @@ export default {
 </script>
 
 <style scoped>
+
+    .word-third{
+        height: 20px;
+    }
+
+    .to-write-button:hover{
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .to-write-button{
+        transition: all .2s;
+        outline: none;
+        border:none;
+        height:20px;
+        font-size:16px;
+        font-family:Microsoft YaHei;
+        font-weight:400;
+        background-color: #fff;
+        color: #03A3EA;
+        padding: 0px;
+    }
+
+    .word-second{
+        font-size:18px;
+        font-family:Microsoft YaHei;
+        font-weight:bold;
+        color:#F59A23;
+    }
+
+    .word-first{
+        font-size:18px;
+        font-family:Microsoft YaHei;
+        font-weight:normal;
+        color:#333435;
+    }
+
+    .title-container{
+        width:100%;
+        text-align: left;
+    }
+
+    .title-div{
+        width:100%;
+        height:110px;
+        background:rgba(252,254,255,1);
+        box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
+        border-radius:20px;
+        padding:22px 34px 22px 34px;
+        margin:22px  0px 48px 0px;
+        display: flex;
+        display: -webkit-flex; /* Safari */
+        flex-direction:row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .day-span{
+        font-size:16px;
+        font-family:Microsoft YaHei;
+        font-weight:400;
+        color:rgba(51,52,53,1);
+        margin-left: 36px;
+    }
+
+    .main-title{
+        font-size:30px;
+        font-family:Microsoft YaHei;
+        font-weight:bold;
+        color:rgba(61,75,89,1);
+    }
 
     .select-main >>> .el-input__inner{
         border-radius: 5px;
@@ -196,7 +291,7 @@ export default {
         height:52px;
         box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
         border-radius:20px 20px 0px 0px;
-        background:rgba(59,76,93,1)!important;
+        background:#1A5D79!important;
         border: none!important;
         font-size:24px;
         font-family:Microsoft YaHei;
