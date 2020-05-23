@@ -19,6 +19,7 @@
                     </span>
                     
                 </div>
+                <flip-countdown :deadline="getDDL()"></flip-countdown>
             </div>
         </div>
         <div class="header-div">
@@ -29,12 +30,12 @@
             text-color="#FCFEFF"
             mode="horizontal" 
             @select="handleSelect">
-                <el-menu-item index="1">PM</el-menu-item>
-                <el-menu-item index="2">UI/UX</el-menu-item>
-                <el-menu-item index="3">FrontEnd</el-menu-item>
-                <el-menu-item index="4">BackEnd</el-menu-item>
-                <el-menu-item index="5">Android</el-menu-item>
-                <el-menu-item index="6">iOS</el-menu-item>
+                <el-menu-item index="产品组">PM</el-menu-item>
+                <el-menu-item index="设计组">UI/UX</el-menu-item>
+                <el-menu-item index="前端组">FrontEnd</el-menu-item>
+                <el-menu-item index="程序组">BackEnd</el-menu-item>
+                <el-menu-item index="Android">Android</el-menu-item>
+                <el-menu-item index="IOS">iOS</el-menu-item>
             </el-menu>
         </div>
         <div v-loading="loading" class="body-div">
@@ -57,22 +58,51 @@
                     >
                 </el-cascader>
             </div>
+            <div class="table-main">
+                <div class="table-title-div">
+                    <table class="title-table" cellpadding="0">
+                        <colgroup class="name-title-colgroup" width="158"></colgroup>
+                        <colgroup span="14" class="weekly-title-colgroup" width="60"></colgroup>
+                        <tr>
+                            <td class="name-title-td"></td>
+                            <td class="weekly-title-td" :key=index v-for="(elem,index) in issuesArray">{{elem}}</td>
+                        </tr>
+                        <tr class="main-tr" :key=index v-for="(mem,index) in selectData">
+                            <td class="name-td">{{mem.name}}</td>
+                            <td v-for="(week) in mem.WeekPublication" :key=week.created_at class="status-td"><img class="status-img" :src="getStatus()"></td>
+                            <td  v-for="(week,index) in getBlanktd(mem.WeekPublication.length)" :key=index class="status-td"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import FlipCountdown from 'vue2-flip-countdown'
+
+import weeklyE from '../assets/weeklyE.png'
+import weeklyU from '../assets/weeklyU.png'
+import weeklyF from '../assets/weeklyF.png'
+
 import {getWeekly} from '../api/user'
 
 export default {
     name:"grouper",
+    components: { FlipCountdown },
     data(){
-        
         return{
-            WeekPublicationFinisherSituation:[],
+            issuesArray:this.getIssuesArray(),
+            weeklyE,
+            weeklyU,
+            weeklyF,
+            weekData:[],
+            groupData:[],
+            selectData:[],
             userInfo:this.$store.getters.userInfo,
             loading:false,
-            defaultActive:"3",
+            defaultActive:"前端组",
             options:{
                 semester:[],
                 campus:""
@@ -81,14 +111,19 @@ export default {
                 {campus:"北洋园"},
                 {campus:"卫津路"},
             ],
-            semesters:[
-
-            ],
+            semesters:[],
         };
     },
     methods:{
         handleSelect(key){
-            window.console.log(key)
+            this.groupData.length=0;
+            this.groupData=this.weekData.filter((elem)=>{
+                return elem.group==key
+            })
+            this.selectData=this.groupData.filter(()=>{
+                return true
+            })
+            this.options.campus=''
         },
         getTerm(){
             let date=new Date;
@@ -101,7 +136,7 @@ export default {
                 term=1;
             }
             this.options.semester=[`${year-1}-${year}`,`${term}`]
-            for(let i=0;i<5;i++){
+            for(let i=0;i<14;i++){
                 let data={
                     value:`${year-i-1}-${year-i}`,
                     label:`${year-i-1}-${year-i}学年`,
@@ -138,9 +173,52 @@ export default {
             return `${m_year+'/'+m_month+'/'+m_date}~${m_year+'/'+m_month+'/'+(m_date+6)}`
         },
         fetchWeekly(semester){
+            this.loading=true
             getWeekly({semester:semester}).then((res)=>{
-                this.WeekPublicationFinisherSituation=res.data.WeekPublicationFinisherSituation
+                this.weekData=res.data.data
+                this.handleSelect(this.defaultActive)
+                this.loading=false
+            }).catch(()=>{
+                this.loading=false
             })
+        },
+        getDDL(){
+            let nowTemp = new Date();//当前时间
+            let oneDayLong = 24*60*60*1000 ;//一天的毫秒数
+            let c_time = nowTemp.getTime() ;//当前时间的毫秒时间
+            let c_day = nowTemp.getDay()||7;//当前时间的星期几
+            let m_time = c_time - (c_day-1)*oneDayLong;//当前周一的毫秒时间
+            let monday = new Date(m_time);//设置周一时间对象
+            let m_year = monday.getFullYear();
+            let m_month = monday.getMonth()+1;
+            let m_date = monday.getDate();
+            return `${m_year+'/'+m_month+'/'+(m_date+6)} 23:59:59`
+        },
+        getIssuesArray(){
+            let a=new Array();
+            let latest=parseInt(this.getIssue())
+            for(let i=0;i<14;i++){
+                a[i]=latest;
+                latest--;
+            }
+            return a;
+        },
+        getStatus(status){
+            switch (status){
+                case 'UnFinished':
+                    return weeklyU
+                case 'Finished':
+                    return weeklyF
+                default:
+                    return weeklyE
+            }
+        },
+        getBlanktd(length){
+            let a=new Array();
+            if(length<14){
+                a=Array.apply(null, {length: 14-length})
+            }
+            return a;
         }
     },
     mounted(){
@@ -150,12 +228,78 @@ export default {
         this.fetchWeekly(`${this.options.semester[0]}-${this.options.semester[1]}`)
     },
     watch:{
-        
+        'options.campus':{
+            handler(val){
+                this.selectData.length=0;
+                this.selectData=this.groupData.filter((elem)=>{
+                        return (val==''||val==elem.campus)
+                })
+            }
+        },
+        'options.semester':{
+            handler(val,oldval){
+                if(oldval.length!=0){
+                    this.fetchWeekly(`${val[0]}-${val[1]}`)
+                }
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
+
+    .main-tr{
+        transition: all .3s;
+    }
+
+    .main-tr:hover{
+        background-color: #fafafa;
+    }
+
+    table , td {
+        border-bottom:1px solid #EBEEF5;
+    }
+
+    .name-title-td{
+        height: 38px;
+    }
+
+    .title-table{
+        font-size:14px;
+        font-family:Microsoft YaHei;
+        font-weight:400;
+        color:rgba(0,0,0,1);
+    }
+
+    .status-td{
+        width: 58px;
+    }
+
+    .status-img{
+        width: 22px;
+        height: 22px;
+    }
+
+    .name-td{
+        width: 158px;
+        height: 38px;
+    }
+
+    .table-main{
+        margin:28px 76px 28px 76px;
+        width: 996px;
+    }
+
+
+    table {
+        border-collapse:collapse;
+    }
+
+
+    .flip-clock{
+        margin:0px!important;
+    }
 
     .word-third{
         height: 20px;
@@ -200,7 +344,7 @@ export default {
 
     .title-div{
         width:100%;
-        height:110px;
+        min-height:110px;
         background:rgba(252,254,255,1);
         box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
         border-radius:20px;
