@@ -476,6 +476,7 @@ export default {
         flex-direction:row;
         justify-content: space-between;
         align-items: flex-start;
+        border: none;
     }
 
     .main-box{

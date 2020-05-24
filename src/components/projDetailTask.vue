@@ -187,7 +187,7 @@ export default {
 
     .create-item{
         text-align: left;
-        width: 100%;
+        width: 692px;
         padding-left: 60px;
         padding-right: 60px;
         display: -webkit-flex; /* Safari */

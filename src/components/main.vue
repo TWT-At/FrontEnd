@@ -1,5 +1,5 @@
 <template>
-    <el-container direction="vertical">
+    <div direction="vertical">
         <cloud-header></cloud-header>
         <el-container>
             <el-aside width="240px">
@@ -52,7 +52,7 @@
                 <router-view></router-view>
             </el-main>
         </el-container>
-    </el-container>
+    </div>
 </template>
 
 <script>
@@ -197,11 +197,16 @@ export default {
 
     .el-main{
         background-color: #E9EFF2;
+        margin-top: 142px;
+        margin-left: 240px;
     }
 
     .el-aside{
-        min-height: 1136px;
+        height: 100%;
         background:#E9EFF2;
+        margin-top: 142px;
+        position: fixed;
+        z-index: 1000;
     }
 
     .el-menu-box >>>  .el-menu-vertical-demo:not(.el-menu--collapse) {

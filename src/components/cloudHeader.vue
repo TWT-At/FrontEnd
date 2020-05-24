@@ -1,10 +1,10 @@
 <template>
-    <el-header height="142px">
+    <header height="142px">
         <div class="image-box">
             <img class="logo" height="62" width="72" :src="logo">
             <img class="at" height="36" width="46" :src="at">
         </div>
-        </el-header>
+        </header>
 </template>
 
 <script>
@@ -24,6 +24,7 @@ export default {
 <style scoped>
     .image-box{
         margin:0px auto 0px auto;
+        height: 142px;
     }
 
     .logo{
@@ -36,8 +37,12 @@ export default {
         margin-bottom: 48px;
     }
 
-    .el-header{
+    header{
         background:rgba(252,254,255,1);
         box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        position:fixed;
+        height:142px;
+        z-index: 2000;
     }
 </style>
