@@ -69,7 +69,7 @@
                         </tr>
                         <tr class="main-tr" :key=index v-for="(mem,index) in selectData">
                             <td class="name-td">{{mem.name}}</td>
-                            <td v-for="(week) in mem.WeekPublication" :key=week.created_at class="status-td"><img class="status-img" :src="getStatus()"></td>
+                            <td v-for="(week) in mem.WeekPublication" :key=week.created_at class="status-td"><img class="status-img" v-on:click="handleToWeek(mem,week)" :src="getStatus()"></td>
                             <td  v-for="(week,index) in getBlanktd(mem.WeekPublication.length)" :key=index class="status-td"></td>
                         </tr>
                     </table>
@@ -219,6 +219,11 @@ export default {
                 a=Array.apply(null, {length: 14-length})
             }
             return a;
+        },
+        handleToWeek(mem,week){
+            this.$store.dispatch('user/setWeekInfo',{mem:mem,week:week}).then(()=>{
+                
+            })
         }
     },
     mounted(){
@@ -239,6 +244,9 @@ export default {
         'options.semester':{
             handler(val,oldval){
                 if(oldval.length!=0){
+                    this.weekData.length=0
+                    this.groupData.length=0
+                    this.selectData.length=0
                     this.fetchWeekly(`${val[0]}-${val[1]}`)
                 }
             }
@@ -277,8 +285,18 @@ export default {
     }
 
     .status-img{
+        transition: all .6s;
         width: 22px;
         height: 22px;
+    }
+
+    .status-img:hover{
+        cursor: pointer;
+         transform:rotate(360deg);
+        -ms-transform:rotate(360deg); 	/* IE 9 */
+        -moz-transform:rotate(360deg); 	/* Firefox */
+        -webkit-transform:rotate(360deg); /* Safari 和 Chrome */
+        -o-transform:rotate(360deg); 	/* Opera */
     }
 
     .name-td{

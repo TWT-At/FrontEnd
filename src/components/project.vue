@@ -39,25 +39,7 @@ export default {
   name: 'project',
   data() {
     return {
-        data:[
-            {   id: 2,
-                name: "齐呈祥",
-                title: "at系统开发",
-                created_at: "2020-04-14 12:24:54",
-                rate:0.6123123123123,
-                DDL:[
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                    {title:"完成原型图",time:"2020-4-44"},
-                ]
-            },
-        ]
+        data:[]
     }
   },
   methods:{
@@ -84,8 +66,8 @@ export default {
     },
     getMyproj(){
         ShowMyProject().then( res=> {
+            res.data.data.reverse()
             res.data.data.forEach(elem => {
-                
                 this.data.push(elem[0])
             });
         })

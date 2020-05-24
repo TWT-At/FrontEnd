@@ -330,6 +330,7 @@ export default {
     border-radius:20px;
     width:326px;
     height:56px;
+    font-size: 18px;
   }
 
   .group-main{

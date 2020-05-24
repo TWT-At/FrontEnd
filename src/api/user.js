@@ -48,6 +48,7 @@ export function changePassword(data){
     return request({
         url:'/api/user/password',
         method: 'post',
+        headers: {'action': 'modify basic information'},
         data
     })
 }

@@ -160,7 +160,7 @@ export default {
                         group_role:elem.group_role,
                         campus:elem.campus,
                         fold:false,
-                        year:2013                                   //此处待更改
+                        year:2019                                   //此处待更改
                     }
                     getComplex({id:o.id}).then(resdata=>{
                         o.email=resdata.data.student[0].email;
@@ -223,7 +223,7 @@ export default {
             handler(val){
                 this.selecetList.length=0;
                 this.list.forEach(elem=>{
-                    if((val.role==""||val.role==elem.group_role)&&(val.campus==""||val.campus==elem.campus)&&(val.year==""||val.role==elem.year)){
+                    if((val.role==''||val.role==elem.group_role)&&(val.campus==""||val.campus==elem.campus)&&(val.year==''||val.year==elem.year)){
                         this.selecetList.push(elem)
                     }
                 })
@@ -235,6 +235,10 @@ export default {
 </script>
 
 <style scoped>
+
+        .el-menu--horizontal{
+        border: none!important;
+    }
 
     .proj-info-span{
         font-size:14px;
@@ -477,7 +481,7 @@ export default {
         height:52px;
         box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
         border-radius:20px 20px 0px 0px;
-        background:rgba(59,76,93,1)!important;
+        background:#1A5D79!important;
         border: none!important;
         font-size:24px;
         font-family:Microsoft YaHei;

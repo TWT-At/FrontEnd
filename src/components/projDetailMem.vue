@@ -82,7 +82,7 @@ import head from '../assets/member2x.png'
 import doing2x from '../assets/doing2x.png'
 import finish2x from '../assets/finish2x.png'
 
-import {getUserDatum,addMember,deleteMember,transferLeader} from '../api/user.js'
+import {getUserDatum,addMember,deleteMember,transferLeader,ShowSpecifiedProject} from '../api/user.js'
 
 export default {
   name: "ProjDetailMem",
@@ -198,10 +198,14 @@ export default {
                 }
                 addMember( pData).then( ()=>{
                     this.$message({
-                    message:'添加成员成功',
-                    type:"success",
-                    duration:5000
-                })
+                            message:'添加成员成功',
+                            type:"success",
+                            duration:5000
+                        })
+                    ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
+                        this.$store.dispatch('user/setProjInfo',res.data.data)
+                    })
+                    this.addVisible=false
                 }).catch( () =>{
                 this.$message({
                     message:'添加成员失败',

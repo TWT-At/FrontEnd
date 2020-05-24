@@ -8,6 +8,7 @@ const state = {
     userInfo:null,
     projDetailID:null,
     projInfo:null,
+    weekInfo:null,
 }
 
 
@@ -24,6 +25,9 @@ const mutations = {
     SET_PROJINFO:(state,info) => {
         state.projInfo = info
     },
+    SET_WEEKINFO:(state,info) => {
+        state.weekInfo = info
+    }
 }
 
 const actions = {
@@ -70,6 +74,9 @@ const actions = {
     },
     setProjInfo({commit},info){
         commit('SET_PROJINFO', info);
+    },
+    setWeekInfo({commit},info){
+        commit('SET_WEEKINFO', info);
     }
 }
 

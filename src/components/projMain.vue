@@ -186,11 +186,14 @@ export default {
                 }
                 addMember( pData).then( ()=>{
                     loading.close()
-                    this.$message({
-                    message:'创建任务成功',
-                    type:"success",
-                    duration:5000
-                })
+                        this.$message({
+                        message:'创建任务成功',
+                        type:"success",
+                        duration:5000
+                    })
+                    this.data.length=0
+                    this.fetchData()
+                    this.dialogVisible=false
                 }).catch( () =>{
                 loading.close()
                 this.$message({
@@ -343,6 +346,7 @@ export default {
     }
 
     .proj-button{
+        border: none;
         transition: all .2s;
         width:134px;
         height:36px;

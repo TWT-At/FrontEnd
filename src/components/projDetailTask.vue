@@ -24,6 +24,7 @@
                 v-model="time"
                 type="datetime"
                 value-format="timestamp"
+                :picker-options="pickerOptions"
                 placeholder="选择日期时间">
                 </el-date-picker>
             </div>
@@ -47,12 +48,16 @@
 import doing2x from '../assets/doing2x.png'
 import finish2x from '../assets/finish2x.png'
 
-import {getMemberDatum,createTask,createOtherTask} from '../api/user'
+import {getMemberDatum,createTask,createOtherTask,ShowSpecifiedProject} from '../api/user'
 
 export default {
   name: "ProjDetailMem",
   data() {
     return {
+        pickerOptions: {
+        disabledDate(v) {
+          return v.getTime() < new Date().getTime() - 86400000;
+        }},
         dialogVisible: false,
         doing2x,
         finish2x,
@@ -108,10 +113,14 @@ export default {
                     time:this.time
                 }).then( ()=>{
                     this.$message({
-                    message:'添加成功',
-                    type:"success",
-                    duration:5000
+                        message:'添加成功',
+                        type:"success",
+                        duration:5000
                     })
+                    ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
+                        this.$store.dispatch('user/setProjInfo',res.data.data)
+                    })
+                    this.dialogVisible=false
                 }).catch(()=>{
                     this.$message({
                     message:'添加失败',
