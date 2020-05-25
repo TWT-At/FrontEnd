@@ -15,7 +15,7 @@
                     <br>
                     <span class="word-third">
                         请工作室各位成员认真对待，按时完成。
-                    <button class="to-write-button">去编辑周报</button>
+                    <button class="to-write-button" @click="handleTo()">去编辑周报</button>
                     </span>
                     
                 </div>
@@ -224,6 +224,9 @@ export default {
             this.$store.dispatch('user/setWeekInfo',{mem:mem,week:week}).then(()=>{
                 
             })
+        },
+        handleTo(){
+            this.$router.push('/main/weeklyWrite')
         }
     },
     mounted(){

@@ -56,7 +56,11 @@ Vue.use(VueRouter)
         },
         {
           name:'weeklyAll',path:'weeklyAll',component:() => import('../components/weeklyAll')
+        },
+        {
+          name:'weeklyWrite',path:'weeklyWrite',component:() => import('../components/weeklyWrite')
         }
+        
       ]},
       {name:'adminMain' ,path:'/adminMain',component:() => import('../components/admin/adminMain'),
         children:[

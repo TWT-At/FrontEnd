@@ -14,7 +14,7 @@
           <div class="item-head">
               <el-progress type="circle" :width=50 :stroke-width=2 :show-text=false :percentage="25"></el-progress>
               <img :src="head" class="img-head">
-              <div class="item-title"><span>{{getRole()}}</span>：{{mem.name}}（{{mem.group_name}}）</div>
+              <div class="item-title"><span>{{getRole(mem.permission)}}</span>：{{mem.name}}（{{mem.group_name}}）</div>
               <div class="item-line"></div>
               <div class="item-time">加入项目时间：{{mem.created_at}}</div>
               <div class="item-task">任务数:{{mem.task_num}}</div>
@@ -265,8 +265,12 @@ export default {
                 })
             })
         },
-        getRole(){
-            return '组员'
+        getRole(key){
+            if(key){
+                return '组长'
+            }else{
+                return '组员'
+            }
         }
     },
     created(){
@@ -285,6 +289,17 @@ export default {
             },
             deep:true
         },
+        selected:{
+            handler(val){
+                if(val==false){
+                    let o=window.document.getElementsByClassName('mem-item')
+                    o.forEach(elem=>{
+                        elem.style.backgroundColor='#fff'
+                        elem.style.cursion='pointer'
+                    })
+                }
+            }
+        }
     }
 };
 </script>

@@ -98,6 +98,10 @@ export default {
                     type:"success",
                     duration:5000
                     })
+                    ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
+                        this.$store.dispatch('user/setProjInfo',res.data.data)
+                    })
+                    this.dialogVisible=false
                 }).catch(()=>{
                     this.$message({
                     message:'添加失败',
@@ -147,6 +151,10 @@ export default {
 </script>
 <style scoped>
 
+    .main-div >>> .el-dialog{
+        width: 864px;
+    }
+
     .create-button:hover{
         cursor: pointer;
         background:#13283C;
@@ -169,7 +177,7 @@ export default {
     }
 
     .task-mem>>> .el-input{
-        width: 604px;
+        width: 460px;
     }
 
     .self-span{
@@ -203,6 +211,7 @@ export default {
         font-family:Microsoft YaHei;
         font-weight:bold;
         color:rgba(61,75,89,1);
+        width: 148px;
     }
 
     .item-end{

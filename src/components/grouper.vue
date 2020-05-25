@@ -338,7 +338,7 @@ export default {
         transition: all .3s ease-in;
     }
 
-    .i-icon-open{
+    .i-icon{
         transform:rotate(-90deg);
         -ms-transform:rotate(-90deg); 	/* IE 9 */
         -moz-transform:rotate(-90deg); 	/* Firefox */
@@ -346,7 +346,7 @@ export default {
         -o-transform:rotate(-90deg); 	/* Opera */
     }
 
-    .i-icon{
+    .i-icon-open{
         transform:rotate(90deg);
         -ms-transform:rotate(90deg); 	/* IE 9 */
         -moz-transform:rotate(90deg); 	/* Firefox */

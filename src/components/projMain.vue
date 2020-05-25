@@ -154,11 +154,21 @@ export default {
                     flag=false;
                 }
             })
-            if(flag){
+            let self=true;
+            if(this.$store.getters.userInfo.id==obj.user_id){
+                self=false;
+            }
+            if(flag&&self){
                 this.addMem.push(obj)
-            }else{
+            }else if((!flag)&&(!self)){
                 this.$message({
                     message:'已添加该成员',
+                    type:"error",
+                    duration:5000
+                })
+            }else {
+                this.$message({
+                    message:'你已经包括在项目内',
                     type:"error",
                     duration:5000
                 })
@@ -192,7 +202,7 @@ export default {
                         duration:5000
                     })
                     this.data.length=0
-                    this.fetchData()
+                    //this.$router.go(0)
                     this.dialogVisible=false
                 }).catch( () =>{
                 loading.close()

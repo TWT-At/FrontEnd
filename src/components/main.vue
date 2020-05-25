@@ -101,6 +101,9 @@ export default {
                 case "grouper" :
                     this.defaultUrl="/main/home";
                     break;
+                case'weeklyWrite':
+                this.defaultUrl='/main/weeklyAll'
+                    break;
                 default:
                     this.defaultUrl="/main/"+href.split('#')[1].split('/')[2];
                 }
