@@ -10,7 +10,7 @@
             @select="handleSelect">
                 <el-menu-item index="1">PM</el-menu-item>
                 <el-menu-item index="2">UI/UX</el-menu-item>
-                <el-menu-item index="3">FrontEnd</el-menu-item>
+                <el-menu-item index="3">Web</el-menu-item>
                 <el-menu-item index="4">BackEnd</el-menu-item>
                 <el-menu-item index="5">Android</el-menu-item>
                 <el-menu-item index="6">iOS</el-menu-item>

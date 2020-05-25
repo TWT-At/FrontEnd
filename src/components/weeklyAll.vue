@@ -32,7 +32,7 @@
             @select="handleSelect">
                 <el-menu-item index="产品组">PM</el-menu-item>
                 <el-menu-item index="设计组">UI/UX</el-menu-item>
-                <el-menu-item index="前端组">FrontEnd</el-menu-item>
+                <el-menu-item index="前端组">Web</el-menu-item>
                 <el-menu-item index="程序组">BackEnd</el-menu-item>
                 <el-menu-item index="Android">Android</el-menu-item>
                 <el-menu-item index="IOS">iOS</el-menu-item>
