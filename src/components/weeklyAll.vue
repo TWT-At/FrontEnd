@@ -177,6 +177,11 @@ export default {
             getWeekly({semester:semester}).then((res)=>{
                 this.weekData=res.data.data
                 this.handleSelect(this.defaultActive)
+                res.data.data.forEach(elem=>{
+                    if(elem.name==this.$store.getters.userInfo.name&&elem.group==this.$store.getters.userInfo.group){
+                        this.$store.dispatch('user/setMyWeek',elem)
+                    }
+                })
                 this.loading=false
             }).catch(()=>{
                 this.loading=false

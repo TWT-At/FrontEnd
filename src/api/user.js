@@ -209,5 +209,27 @@ export function finsihProject(data){
     })
 }
 
+export function getMessageDetail(data){
+    return request({
+        url:'/api/GetMessageDetail',
+        method: 'POST',
+        headers: {
+            'action': "get others' week publication",
+            },
+        data
+    })
+}
+
+export function sendMessage(data){
+    return request({
+        url:'/api/message',
+        method: 'POST',
+        headers: {
+            'action': "write week publication",
+            },
+        data
+    })
+}
+
 
 

@@ -9,6 +9,8 @@ const state = {
     projDetailID:null,
     projInfo:null,
     weekInfo:null,
+    myWeek:null,
+    markDown:'',
 }
 
 
@@ -27,6 +29,12 @@ const mutations = {
     },
     SET_WEEKINFO:(state,info) => {
         state.weekInfo = info
+    },
+    SET_MYWEEK:(state,info) => {
+        state.myWeek=info
+    },
+    SET_MARKDOWN:(state,content) => {
+        state.markDown=content
     }
 }
 
@@ -77,6 +85,12 @@ const actions = {
     },
     setWeekInfo({commit},info){
         commit('SET_WEEKINFO', info);
+    },
+    setMyWeek({commit},info){
+        commit('SET_MYWEEK',info)
+    },
+    setMarkDown({commit},content){
+        commit('SET_MARKDOWN',content)
     }
 }
 
