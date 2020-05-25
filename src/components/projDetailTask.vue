@@ -51,108 +51,124 @@ import finish2x from '../assets/finish2x.png'
 import {getMemberDatum,createTask,createOtherTask,ShowSpecifiedProject} from '../api/user'
 
 export default {
-  name: "ProjDetailMem",
-  data() {
-    return {
-        pickerOptions: {
-        disabledDate(v) {
-          return v.getTime() < new Date().getTime() - 86400000;
-        }},
-        dialogVisible: false,
-        doing2x,
-        finish2x,
-      projInfo:this.$store.getters.projInfo,
-      taskInfo:{
-          title:'',
-          description:''
-      },
-      value:'',
-      time:NaN,
-      options:[],
-      myPermition:0
+    name: "ProjDetailMem",
+    data() {
+        return {
+            pickerOptions: {
+            disabledDate(v) {
+            return v.getTime() < new Date().getTime() - 86400000;
+            }},
+            dialogVisible: false,
+            doing2x,
+            finish2x,
+            projInfo:this.$store.getters.projInfo,
+            taskInfo:{
+                title:'',
+                description:''
+            },
+            value:'',
+            time:NaN,
+            options:[],
+            myPermition:0
+        }
+    },
+    methods:{
+        getOptions(){
+            getMemberDatum({project_id:this.$store.getters.projDetailID.id}).then( res=>{
+                this.options=res.data.data
+                res.data.data.forEach(elem=>{
+                    if(elem.user_id==this.$store.getters.userInfo.id){
+                        this.myPermition=1
+                    }
+                })
+            })
+        },
+        handleSub(){
+            switch (this.myPermition){
+                case 1:
+                    if(this.value==''||this.taskInfo.title==''||this.taskInfo.description==''||this.time==''){
+                        createOtherTask({
+                            project_id:this.$store.getters.projDetailID.id,
+                            name:this.value,
+                            title:this.taskInfo.title,
+                            description:this.taskInfo.description,
+                            deadline:this.time
+                        }).then( ()=>{
+                            this.$message({
+                            message:'添加成功',
+                            type:"success",
+                            duration:5000
+                            })
+                            ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
+                                this.$store.dispatch('user/setProjInfo',res.data.data)
+                            })
+                            this.dialogVisible=false
+                        }).catch(()=>{
+                            this.$message({
+                            message:'添加失败',
+                            type:"error",
+                            duration:5000
+                        })})
+                    }else{
+                        this.$message({
+                            message:'请填写全部信息',
+                            type:"error",
+                            duration:5000
+                        })
+                    }
+                break;
+                case 0:
+                    if(this.$store.getters.projDetailID.id==''||this.taskInfo.title==''||this.time==''){
+                        createTask({
+                            project_id:this.$store.getters.projDetailID.id,
+                            title:this.taskInfo.title,
+                            description:this.taskInfo.description,
+                            deadline:this.time
+                        }).then( ()=>{
+                            this.$message({
+                                message:'添加成功',
+                                type:"success",
+                                duration:5000
+                            })
+                            ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
+                                this.$store.dispatch('user/setProjInfo',res.data.data)
+                            })
+                            this.dialogVisible=false
+                        }).catch(()=>{
+                            this.$message({
+                            message:'添加失败',
+                            type:"error",
+                            duration:5000
+                        })})
+                    }else{
+                        this.$message({
+                            message:'请填写全部信息',
+                            type:"error",
+                            duration:5000
+                        })
+                        }
+                    break;
+                default:break;
+            }
+        }
+    },
+    created(){
+        this.getOptions()
+    },
+    watch:{
+        'taskInfo.title':{
+            handler(val){
+                this.taskInfo.description=val;
+            },
+            deep:true
+        }
     }
-  },
-  methods:{
-      getOptions(){
-          getMemberDatum({project_id:this.$store.getters.projDetailID.id}).then( res=>{
-              this.options=res.data.data
-              res.data.data.forEach(elem=>{
-                  if(elem.user_id==this.$store.getters.userInfo.id){
-                      this.myPermition=1
-                  }
-              })
-          })
-      },
-      handleSub(){
-          switch (this.myPermition){
-              case 1:
-                  createOtherTask({
-                      project_id:this.$store.getters.projDetailID.id,
-                      name:this.value,
-                      title:this.taskInfo.title,
-                      description:this.taskInfo.description,
-                      time:this.time
-                  }).then( ()=>{
-                    this.$message({
-                    message:'添加成功',
-                    type:"success",
-                    duration:5000
-                    })
-                    ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
-                        this.$store.dispatch('user/setProjInfo',res.data.data)
-                    })
-                    this.dialogVisible=false
-                }).catch(()=>{
-                    this.$message({
-                    message:'添加失败',
-                    type:"error",
-                    duration:5000
-                })})
-                break;
-            case 0:
-                createTask({
-                    project_id:this.$store.getters.projDetailID.id,
-                    title:this.taskInfo.title,
-                    description:this.taskInfo.description,
-                    time:this.time
-                }).then( ()=>{
-                    this.$message({
-                        message:'添加成功',
-                        type:"success",
-                        duration:5000
-                    })
-                    ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
-                        this.$store.dispatch('user/setProjInfo',res.data.data)
-                    })
-                    this.dialogVisible=false
-                }).catch(()=>{
-                    this.$message({
-                    message:'添加失败',
-                    type:"error",
-                    duration:5000
-                })})
-                break;
-            default:break;
-          }
-      }
-  },
-  created(){
-      this.getOptions()
-  },
-  watch:{
-      'taskInfo.title':{
-          handler(val){
-              this.taskInfo.description=val;
-          },
-          deep:true
-      }
-  }
 };
 </script>
 <style scoped>
 
     .main-div >>> .el-dialog{
-        width: 864px;
+        width: 864px!important;
     }
 
     .create-button:hover{

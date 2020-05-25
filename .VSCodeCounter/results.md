@@ -1,34 +1,34 @@
 # Summary
 
-Date : 2020-05-20 13:33:28
+Date : 2020-05-25 19:39:18
 
 Directory d:\at\twtat
 
-Total : 34 files,  16977 codes, 15 comments, 470 blanks, all 17462 lines
+Total : 36 files,  17791 codes, 26 comments, 536 blanks, all 18353 lines
 
 [details](details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| JSON | 2 | 12,053 | 0 | 2 | 12,055 |
-| Vue | 18 | 4,381 | 12 | 386 | 4,779 |
-| JavaScript | 12 | 501 | 2 | 73 | 576 |
+| JSON | 2 | 12,089 | 0 | 2 | 12,091 |
+| Vue | 20 | 5,106 | 23 | 445 | 5,574 |
+| JavaScript | 12 | 554 | 2 | 80 | 636 |
 | Markdown | 1 | 26 | 0 | 8 | 34 |
 | HTML | 1 | 16 | 1 | 1 | 18 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 34 | 16,977 | 15 | 470 | 17,462 |
+| . | 36 | 17,791 | 26 | 536 | 18,353 |
 | public | 1 | 16 | 1 | 1 | 18 |
-| src | 28 | 4,866 | 14 | 458 | 5,338 |
-| src\api | 2 | 194 | 0 | 27 | 221 |
-| src\components | 14 | 4,065 | 12 | 344 | 4,421 |
+| src | 30 | 5,644 | 25 | 524 | 6,193 |
+| src\api | 2 | 216 | 0 | 29 | 245 |
+| src\components | 16 | 4,790 | 23 | 403 | 5,216 |
 | src\components\admin | 2 | 464 | 1 | 42 | 507 |
-| src\router | 1 | 83 | 1 | 7 | 91 |
-| src\store | 4 | 111 | 0 | 22 | 133 |
-| src\store\modules | 2 | 88 | 0 | 15 | 103 |
+| src\router | 1 | 91 | 1 | 13 | 105 |
+| src\store | 4 | 134 | 0 | 22 | 156 |
+| src\store\modules | 2 | 109 | 0 | 15 | 124 |
 | src\utils | 2 | 84 | 1 | 11 | 96 |
 | src\views | 3 | 282 | 0 | 34 | 316 |
 
