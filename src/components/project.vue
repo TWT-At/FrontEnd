@@ -19,7 +19,7 @@
                 </div>
                 <div v-if="handleIf(proj.rate)" class="ddl-main" >
                     <div class="ddl-item" v-for="(item,index) in proj.task.slice(0,3)" :key="index">
-                        【{{item.time}}】{{item.title}}
+                        【{{item.deadline}}】{{item.title}}
                     </div>
                 </div>
                 <div v-if="!handleIf(proj.rate)" class="finish-div">

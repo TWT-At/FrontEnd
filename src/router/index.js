@@ -88,7 +88,7 @@ router.beforeEach((to,from,next) =>{
     store.dispatch('user/getInfo').then(() => {
         next()
     }).catch(() => {
-      next()
+      toLogin()
     })
   }else{
     next()

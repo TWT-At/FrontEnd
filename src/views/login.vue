@@ -65,7 +65,6 @@ export default {
             });
         },
         ok(){
-        window.console.log(123)
         }
     },
     mounted(){

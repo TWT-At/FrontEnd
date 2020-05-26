@@ -23,7 +23,7 @@
             <div class="task-ddl create-item"><span class="title-span">DDL：</span><el-date-picker
                 v-model="time"
                 type="datetime"
-                value-format="timestamp"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 :picker-options="pickerOptions"
                 placeholder="选择日期时间">
                 </el-date-picker>
@@ -55,8 +55,8 @@ export default {
     data() {
         return {
             pickerOptions: {
-            disabledDate(v) {
-            return v.getTime() < new Date().getTime() - 86400000;
+            disabledDate(time) {
+                return time.getTime() < Date.now() - 24 * 60 * 60 * 1000
             }},
             dialogVisible: false,
             doing2x,
@@ -67,7 +67,7 @@ export default {
                 description:''
             },
             value:'',
-            time:NaN,
+            time:'',
             options:[],
             myPermition:0
         }
@@ -86,7 +86,7 @@ export default {
         handleSub(){
             switch (this.myPermition){
                 case 1:
-                    if(this.value==''||this.taskInfo.title==''||this.taskInfo.description==''||this.time==''){
+                    if(this.value!=''&&this.taskInfo.title!=''&&this.taskInfo.description!=''&&this.time!=''){
                         createOtherTask({
                             project_id:this.$store.getters.projDetailID.id,
                             name:this.value,
@@ -99,9 +99,13 @@ export default {
                             type:"success",
                             duration:5000
                             })
-                            ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
-                                this.$store.dispatch('user/setProjInfo',res.data.data)
-                            })
+                            ShowSpecifiedProject({project_id:this.$store.getters.projDetailID.id}).then( res=>{
+                                this.$store.dispatch('user/setProjInfo',res.data.data).then(()=>{
+                                    this.projInfo=this.$store.getters.projInfo
+                                })
+                            }).catch(()=>{
+                        window.console.log(123)
+                    })
                             this.dialogVisible=false
                         }).catch(()=>{
                             this.$message({
@@ -130,8 +134,12 @@ export default {
                                 type:"success",
                                 duration:5000
                             })
-                            ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
-                                this.$store.dispatch('user/setProjInfo',res.data.data)
+                            ShowSpecifiedProject({project_id:this.$store.getters.projDetailID.id}).then( res=>{
+                                this.$store.dispatch('user/setProjInfo',res.data.data).then(()=>{
+                                    this.projInfo=this.$store.getters.projInfo
+                                })
+                            }).catch(()=>{
+                                window.console.log(123)
                             })
                             this.dialogVisible=false
                         }).catch(()=>{

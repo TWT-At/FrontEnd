@@ -202,9 +202,14 @@ export default {
                             type:"success",
                             duration:5000
                         })
-                    ShowSpecifiedProject({project_id:this.projInfo.id}).then( res=>{
-                        this.$store.dispatch('user/setProjInfo',res.data.data)
+                    ShowSpecifiedProject({project_id:this.$store.getters.projDetailID.id}).then( res=>{
+                        this.$store.dispatch('user/setProjInfo',res.data.data).then(()=>{
+                            this.projInfo=this.$store.getters.projInfo
+                        })
+                    }).catch(()=>{
+                        window.console.log(123)
                     })
+                    this.addMem.length=0
                     this.addVisible=false
                 }).catch( () =>{
                 this.$message({
@@ -232,11 +237,17 @@ export default {
                 name:this.selectedMem.name,
                 user_id:this.selectedMem.member_id
             }).then(()=>{
-                this.projInfo.member.slice(this.selectedIndex,1)
                 this.$message({
                     message:'删除成员成功',
                     type:"success",
                     duration:5000
+                })
+                ShowSpecifiedProject({project_id:this.$store.getters.projDetailID.id}).then( res=>{
+                    this.$store.dispatch('user/setProjInfo',res.data.data).then(()=>{
+                        this.projInfo=this.$store.getters.projInfo
+                    })
+                }).catch(()=>{
+                    window.console.log(123)
                 })
             }).catch(()=>{
                     this.$message({
