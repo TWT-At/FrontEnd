@@ -59,8 +59,10 @@ Vue.use(VueRouter)
         },
         {
           name:'weeklyWrite',path:'weeklyWrite',component:() => import('../components/weeklyWrite')
-        }
-        
+        },
+        {
+          name:'weeklyComment',path:'weeklyComment',component:() => import('../components/weeklyComment')
+        } 
       ]},
       {name:'adminMain' ,path:'/adminMain',component:() => import('../components/admin/adminMain'),
         children:[
@@ -82,7 +84,7 @@ router.beforeEach((to,from,next) =>{
     next('/login')
   }else if (!store.getters.projDetailID&&to.path.split('/')[3]=='projDetail'){
     next('/main/projMain/project')
-  }else if (!store.getters.myWeek&&to.path.split('/')[2]=='weeklyWrite'){
+  }else if (!store.getters.myWeek&&from.path.split('/')[2]=='weeklyAll'){
     next('/main/weeklyAll')
   }else if (!store.getters.userInfo) {
     store.dispatch('user/getInfo').then(() => {

@@ -1,26 +1,28 @@
 <template>
-  <div v-loading="loading" class="main-box">
-      <div class="title-div">
-          <div class="main-title">第{{getIssue()}}期周报
-              <span class="title-span">{{getDay()}}</span>
-          </div>
-          <div>
-          <button class="title-button" @click="subMarkDown()">提交</button>
-          <button class="title-button" @click="$router.go(-1)">返回</button>
-          </div>
-      </div>
-      <div class="des-title">
-          以下模板仅供参考，你可以自己决定在周报中记录什么。 文档编辑器采用markdown语法，语法参考请点击：
-          <a target="_blank" href="https://www.runoob.com/markdown/md-tutorial.html">语法参考</a>
-      </div>
-       <mavon-editor 
-            v-model="content" 
-            ref="md" 
-            @change="change" 
-            style="min-height: 524px"
-            :toolbars=toolbars
-        />
-  </div>
+    <div 
+    v-loading.fullscreen.lock="loading"
+    class="main-box">
+        <div class="title-div">
+            <div class="main-title">第{{getIssue()}}期周报
+                <span class="title-span">{{getDay()}}</span>
+            </div>
+            <div>
+            <button class="title-button" @click="subMarkDown()">提交</button>
+            <button class="title-button" @click="$router.go(-1)">返回</button>
+            </div>
+        </div>
+        <div class="des-title">
+            以下模板仅供参考，你可以自己决定在周报中记录什么。 文档编辑器采用markdown语法，语法参考请点击：
+            <a target="_blank" href="https://www.runoob.com/markdown/md-tutorial.html">语法参考</a>
+        </div>
+        <mavon-editor 
+                v-model="content" 
+                ref="md" 
+                @change="change" 
+                style="min-height: 524px"
+                :toolbars=toolbars
+            />
+    </div>
 </template>
 
 <script>
@@ -145,11 +147,25 @@ export default {
                 this.$store.dispatch('user/setMarkDown',val)
             }
         }
+    },
+    mounted(){
+        (function smoothscroll(){
+            var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(smoothscroll);
+                window.scrollTo (0,currentScroll - (currentScroll/5));
+            }
+        })();
     }
 }
 </script>
 
 <style scoped>
+
+    .main-box >>> .v-show-content , .scroll-style , .scroll-style-border-radius{
+        border-radius: 20px!important;
+    }
+
 
     .markdown-body{
         width: 100%;

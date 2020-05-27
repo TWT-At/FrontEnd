@@ -69,7 +69,7 @@
                         </tr>
                         <tr class="main-tr" :key=index v-for="(mem,index) in selectData">
                             <td class="name-td">{{mem.name}}</td>
-                            <td v-for="(week) in mem.WeekPublication" :key=week.created_at class="status-td"><img class="status-img" v-on:click="handleToWeek(mem,week)" :src="getStatus()"></td>
+                            <td v-for="(week) in mem.WeekPublication" :key=week.created_at class="status-td"><img class="status-img" v-on:click="handleToWeek(mem,week)" :src="getStatus(week.status)"></td>
                             <td  v-for="(week,index) in getBlanktd(mem.WeekPublication.length)" :key=index class="status-td"></td>
                         </tr>
                     </table>
@@ -226,9 +226,10 @@ export default {
             return a;
         },
         handleToWeek(mem,week){
-            this.$store.dispatch('user/setWeekInfo',{mem:mem,week:week}).then(()=>{
-                
-            })
+            if(week.status=='Finished'){
+                this.$store.dispatch('user/setWeekInfo',{mem:mem,week:week}).then(()=>{
+                this.$router.push('/main/weeklyComment')
+            })}
         },
         handleTo(){
             this.$router.push('/main/weeklyWrite')

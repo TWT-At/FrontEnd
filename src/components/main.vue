@@ -102,7 +102,10 @@ export default {
                     this.defaultUrl="/main/home";
                     break;
                 case'weeklyWrite':
-                this.defaultUrl='/main/weeklyAll'
+                    this.defaultUrl='/main/weeklyAll'
+                    break;
+                case 'weeklyComment':
+                    this.defaultUrl='/main/weeklyAll'
                     break;
                 default:
                     this.defaultUrl="/main/"+href.split('#')[1].split('/')[2];

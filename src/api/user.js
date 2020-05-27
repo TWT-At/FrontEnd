@@ -231,5 +231,26 @@ export function sendMessage(data){
     })
 }
 
+export function scoreMessage(data){
+    return request({
+        url:'/api/ScoreMessage',
+        method: 'POST',
+        headers: {
+            'action': "rate week publication",
+            },
+        data
+    })
+}
+
+export function commentMessage(data){
+    return request({
+        url:'/api/CommentMessage',
+        method: 'POST',
+        headers: {
+            'action': "comment week publication",
+            },
+        data
+    })
+}
 
 
