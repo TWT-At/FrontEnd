@@ -253,4 +253,26 @@ export function commentMessage(data){
     })
 }
 
+export function getComment(data){
+    return request({
+        url:'/api/GetComment',
+        method: 'POST',
+        headers: {
+            'action': "comment week publication",
+            },
+        data
+    })
+}
+
+export function likeComment(data){
+    return request({
+        url:'/api/LoveMessageComment',
+        method: 'POST',
+        headers: {
+            'action': "comment week publication",
+            },
+        data
+    })
+}
+
 

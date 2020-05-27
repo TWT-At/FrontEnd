@@ -301,7 +301,7 @@ export default {
 
     .status-img:hover{
         cursor: pointer;
-         transform:rotate(360deg);
+        transform:rotate(360deg);
         -ms-transform:rotate(360deg); 	/* IE 9 */
         -moz-transform:rotate(360deg); 	/* Firefox */
         -webkit-transform:rotate(360deg); /* Safari 和 Chrome */
