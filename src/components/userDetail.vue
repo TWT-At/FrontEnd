@@ -74,7 +74,7 @@
                     </el-form-item>
                     <div class="pass-explain">
                         为确保信息安全，请养成良好的密码使用习惯，不得使用弱密码，尽量避免同一密码多处使用。<br/>
-                        请设置最少 8 位的密码，建议包含 大、小写字母，数字，符号 中的至少三种。
+                        请设置最少 6 位的密码，建议包含 大、小写字母，数字。
                     </div>
                     <el-form-item label="确认密码" prop="checkPass">
                         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>

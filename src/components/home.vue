@@ -6,7 +6,7 @@
           <div class="info-title-box">
             <img :src="head" class="info-title-logo">
             <div class="title-word">
-              早上好，{{userInfo.name}}
+              {{getHello()}}，{{userInfo.name}}
             </div>
           </div>
           <div class="info-main">
@@ -30,7 +30,7 @@
             <div class="weekly-div-second weekly-div">起止日期：{{getWeekStartDate()}}～{{getWeekEndDate()}}</div>
             <div class="weekly-div-third weekly-div">
               周报截止日期为每周周一，在时间范围内可以进行编辑。<br/>超过时间的周报不能进行编辑。
-              <button class="write-weekly-button">去编辑周报>></button>
+              <button class="write-weekly-button" @click="$router.push('/main/weeklyAll')">去编辑周报>></button>
             </div>
           </div>
         </div>
@@ -52,6 +52,9 @@
             <div class="messages" v-for="(message,i) in messages" :key="i">
               <div class="messages-title"><el-checkbox v-model="message.checked"></el-checkbox>{{message.type}}{{message.title}}</div>
               <div class="messages-time">{{message.time}}</div>
+            </div>
+            <div class="messages-to-div">
+                <button class="write-weekly-button">更多信息>></button>
             </div>
         </div>
       </div>
@@ -144,12 +147,25 @@ export default {
         let oneDayLong = 24*60*60*1000 ;//一天的毫秒数
         let c_time = nowTemp.getTime() ;//当前时间的毫秒时间
         let c_day = nowTemp.getDay()||7;//当前时间的星期几
-        let m_time = c_time - (c_day-1)*oneDayLong;//当前周一的毫秒时间
+        let m_time = c_time + (7-c_day)*oneDayLong;//当前周一的毫秒时间
         let monday = new Date(m_time);//设置周一时间对象
         let m_year = monday.getFullYear();
         let m_month = monday.getMonth()+1;
         let m_date = monday.getDate();
-        return (m_year+'-'+m_month+'-'+(m_date+6))
+        return (m_year+'-'+m_month+'-'+(m_date))
+      },
+      getHello(){
+        let nowTemp = new Date();//当前时间
+        let time =nowTemp.getHours()
+        if(time<6){
+          return '凌晨好'
+        }else if(time<12){
+          return '早上好'
+        }else if(time<18){
+          return '下午好'
+        }else if(time<=23){
+          return '晚上好'
+        }
       }
     },
     mounted(){
@@ -316,6 +332,14 @@ export default {
 
 <style scoped>
 
+    .messages-to-div{
+        width: 100%;
+        text-align: right;
+        padding-right: 38px;
+        position: absolute;
+        bottom: 18px;
+    }
+
   .group-button:hover,.group-button:focus{
     cursor: pointer;
     background-color: #CCD1D6;
@@ -463,6 +487,7 @@ export default {
   }
 
   .message-main{
+      position: relative;
     height:474px;
     background:rgba(252,254,255,1);
     box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
@@ -481,7 +506,7 @@ export default {
     border-color: #D70000;
     width: 34px;
     height: 34px;
-    line-height: 24px;
+    line-height: 26px;
     margin-left: 12px;
     margin-bottom: 0px;
     border-radius: 50%;

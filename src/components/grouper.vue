@@ -479,13 +479,14 @@ export default {
     .el-menu-item{
         width:178px;
         height:52px;
-        box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
+        box-shadow:3px -3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
         border-radius:20px 20px 0px 0px;
         background:#1A5D79!important;
         border: none!important;
         font-size:24px;
         font-family:Microsoft YaHei;
         font-weight:bold;
+        z-index: 1;
     }
 
     .el-menu-item:hover{

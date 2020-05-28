@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="des-title">
-            以下模板仅供参考，你可以自己决定在周报中记录什么。 文档编辑器采用markdown语法，语法参考请点击：
+            以下模板仅供参考，你可以自己决定在周报中记录什么。<br> 文档编辑器采用markdown语法，语法参考请点击：
             <a target="_blank" href="https://www.runoob.com/markdown/md-tutorial.html">语法参考</a>
         </div>
         <mavon-editor 
@@ -96,7 +96,13 @@ export default {
             let m_year = monday.getFullYear();
             let m_month = monday.getMonth()+1;
             let m_date = monday.getDate();
-            return `${m_year+'/'+m_month+'/'+m_date}~${m_year+'/'+m_month+'/'+(m_date+6)}`
+            //
+            let s_time = c_time + (7-c_day)*oneDayLong;//当前周一的毫秒时间
+            let sunday = new Date(s_time);//设置周一时间对象
+            let s_year = sunday.getFullYear();
+            let s_month = sunday.getMonth()+1;
+            let s_date = sunday.getDate();
+            return `${m_year+'/'+m_month+'/'+m_date}~${s_year+'/'+s_month+'/'+(s_date)}`
         },
         change(value, render){
             // render 为 markdown 解析后的结果[html]
@@ -182,7 +188,7 @@ export default {
         font-family:Microsoft YaHei;
         font-weight:400;
         color:rgba(51,52,53,1);
-        margin-left: 36px;
+        margin-left: 24px;
     }
 
     .title-button:hover{
