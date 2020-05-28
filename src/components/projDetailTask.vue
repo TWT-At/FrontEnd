@@ -4,7 +4,7 @@
           <div class="task-num">任务（{{projInfo.task.length}}）</div>
           <button class="head-button" @click="dialogVisible=true">新建任务</button>
       </div>
-      <div class="task-item" v-for="(task,index) in projInfo.task" :key=index>
+      <div @click="handleChoose(task)" class="task-item" v-for="(task,index) in projInfo.task" :key=index>
           <div class="item-head">
               <div class="item-title">TASK：{{task.title}}</div>
               <div class="item-line"></div>
@@ -41,6 +41,30 @@
             </div>
             <button class="create-button" @click="handleSub">确认录入</button>
         </el-dialog>
+        <el-dialog
+        title=""
+        :visible.sync="chosenDialogVisible"
+        class="chosen-dialog"
+        width="45%">
+            <div class="chosen-dialog-container">
+                <div class="left-dialog">
+                    <img :src="doing2x">
+                </div>
+                <div class="right-dialog">
+                    <div class="right-dialog-title">TASK|{{chosenTask.title}}</div>
+                    <div class="right-dialog-time">
+                        <div>起始时间：{{chosenTask.created_at}}</div>
+                        <div class="DDL-title">DDL:{{chosenTask.deadline}}</div>
+                    </div>
+                    <div class="right-dialog-name">参与者：{{chosenTask.name}}</div>
+                    <div class="right-dialog-button-container">
+                        <button class="create-button" >TASK延期</button>
+                        <button class="create-button" >TASK完结</button>
+                        <button id="delete-task-button" class="create-button" >删除TASK</button>
+                    </div>
+                </div>    
+            </div>
+        </el-dialog>
   </div>
 </template>
 
@@ -54,6 +78,8 @@ export default {
     name: "ProjDetailMem",
     data() {
         return {
+            chosenDialogVisible:false,
+            chosenTask:{},
             pickerOptions: {
             disabledDate(time) {
                 return time.getTime() < Date.now() - 24 * 60 * 60 * 1000
@@ -158,6 +184,10 @@ export default {
                     break;
                 default:break;
             }
+        },
+        handleChoose(task){
+            this.chosenTask=task
+            this.chosenDialogVisible=true
         }
     },
     created(){
@@ -174,6 +204,79 @@ export default {
 };
 </script>
 <style scoped>
+
+    #delete-task-button:hover{
+        background-color: #690101;
+    }
+
+    #delete-task-button{
+        background-color: #A20404;
+    }
+
+    .right-dialog-button-container{
+        margin-top: 200px;
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 682px;
+    }
+
+    .DDL-title{
+        font-size: 16px;
+        color: #A20404;
+        font-weight: bold;
+    }
+
+    .right-dialog-time{
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+        align-items: center;
+        width: 682px;
+        margin-top: 18px;
+    }
+
+    .right-dialog-title{
+        font-size:30px;
+        font-family:Microsoft YaHei;
+        font-weight:bold;
+        color:rgba(61,75,89,1);
+    }
+
+    .right-dialog{
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction:column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 18px;
+    }
+
+    .chosen-dialog >>> .el-dialog__body{
+        padding:46px;
+    }
+
+    .chosen-dialog >>> .el-dialog__header{
+        padding:0px;
+    }
+
+    .left-dialog > img{
+        margin-top: 6px;
+        width:26px;
+        height:26px;
+
+    }
+
+    .chosen-dialog-container{
+        display: -webkit-flex; /* Safari */
+        display: flex;
+        flex-direction:row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 
     .main-div >>> .el-dialog{
         width: 864px!important;
@@ -281,6 +384,9 @@ export default {
         color:rgba(0,0,0,1);
     }
 
+    .task-item:hover{
+        cursor: pointer;
+    }
 
     .task-item{
         width:524px;
