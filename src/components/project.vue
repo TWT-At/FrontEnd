@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {ShowMyProject,ShowSpecifiedProject} from '../api/user'
+import {ShowMyProject} from '../api/user'
 
 export default {
   name: 'project',
@@ -41,6 +41,7 @@ export default {
     return {
         data:[],
         loading:false,
+        myPermition:0
     }
   },
   methods:{
@@ -60,10 +61,11 @@ export default {
     },
     handleClick(proj){
         this.$store.dispatch('user/setProjDetailID',proj)
-         ShowSpecifiedProject({project_id:proj.id}).then( res=>{
-            this.$store.dispatch('user/setProjInfo',res.data.data)
-            this.$router.push('/main/projMain/projDetail/projDetailMem')
-        })
+        this.$router.push('/main/projMain/projDetail/projDetailMem')
+         //ShowSpecifiedProject({project_id:proj.id}).then( res=>{
+        //    this.$store.dispatch('user/setProjInfo',res.data.data)
+            
+        //})
     },
     getMyproj(){
         this.loading=true
@@ -123,7 +125,7 @@ export default {
         flex-direction:column;
         justify-content: flex-start;
         align-items: flex-start;
-        min-height: 100%;
+        min-height: 48px;
     }
 
     .ddl-title{

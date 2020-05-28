@@ -386,7 +386,7 @@ export default {
         width:100%;
         min-height:110px;
         background:rgba(252,254,255,1);
-        box-shadow:3px 3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
+        box-shadow:3px -3px 10px 0px rgba(0, 0, 0, 0.05), -3px -3px 10px 0px rgba(0, 0, 0, 0.05);
         border-radius:20px;
         padding:22px 34px 22px 34px;
         margin:22px  0px 48px 0px;

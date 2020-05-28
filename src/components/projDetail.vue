@@ -28,7 +28,7 @@
         v-model="ProjDetail.description">
     </el-input>
     <div class="finish-div">
-        <button class="my-button finish-button" @click="finishProj">项目完结</button>
+        <button v-if="myPermition" class="my-button finish-button" @click="finishProj">项目完结</button>
     </div>
     <div class="nav-div">
         <button :id="handleStyle(1)" class="nav-button nav-mem" @click="handleNav(1)">项目成员</button>
@@ -53,8 +53,10 @@ export default {
             ProjDetail: {
                 title:'',
                 member:[],
-                description:''
+                description:'',
+                myPermition:0
             },
+            myPermition:0
         }
     },
     methods:{
@@ -103,6 +105,12 @@ export default {
         getComplex(){
             ShowSpecifiedProject({project_id:this.ID.id}).then( res=>{
                 this.ProjDetail=res.data.data
+                this.ProjDetail.member.forEach((elem)=>{
+                    if(elem.member_id==this.$store.getters.userInfo.id&&elem.permission==1){
+                        this.myPermition=1
+                        this.ProjDetail.myPermition=1
+                    }
+                })
                 this.$store.dispatch('user/setProjInfo',this.ProjDetail)
             })
         },

@@ -153,6 +153,8 @@ export default {
                     })
                     this.otherComments.length=0
                     this.getComment()
+                    this.scored.comment=''
+                    this.scored.score=0
                 }).catch(()=>{
                     this.$message({
                         message:'打分失败',
@@ -180,6 +182,7 @@ export default {
                         type:"success",
                         duration:5000
                     })
+                    this.comment=''
                     this.otherComments.length=0
                     this.getComment()
                 }).catch(()=>{

@@ -2,15 +2,15 @@
   <div class="main-div">
       <div class="button-div">
           <div class="mem-num">项目成员（{{projInfo.member.length}}）</div>
-          <button class="head-button add-button" @click="addVisible=true">添加成员</button>
-          <button :style="changeSelectStype()" class="head-button select-button" @click="handleSelected">
+          <button class="head-button add-button" v-if="myPermition" @click="addVisible=true">添加成员</button>
+          <button v-if="myPermition" :style="changeSelectStype()" class="head-button select-button" @click="handleSelected">
               <span v-if="!selected">选择成员</span>
               <span v-if="selected">取消</span>
           </button>
           <button v-if="selected" @click="changeGroupHead" class="head-button move-head-button">转让组长</button>
           <button v-if="selected" @click="removeMem" class="head-button remove-button">移除成员</button>
       </div>
-      <div class="mem-item" v-on:click="handleChoose(index,mem)" v-for="(mem,index) in projInfo.member" :key=index>
+      <div class="mem-item" v-on:click="handleChoose(index,mem)" v-for="(mem,index) in rangeMem(projInfo.member)" :key=index>
           <div class="item-head">
               <el-progress type="circle" :width=50 :stroke-width=2 :show-text=false :percentage="25"></el-progress>
               <img :src="head" class="img-head">
@@ -88,6 +88,7 @@ export default {
   name: "ProjDetailMem",
   data() {
     return {
+        myPermition:this.$store.getters.projInfo.myPermition,
         selectedIndex:NaN,
         selectedMem:null,
         addVisible: false,
@@ -268,6 +269,13 @@ export default {
                     type:"success",
                     duration:5000
                 })
+                ShowSpecifiedProject({project_id:this.$store.getters.projDetailID.id}).then( res=>{
+                    this.$store.dispatch('user/setProjInfo',res.data.data).then(()=>{
+                        this.projInfo=this.$store.getters.projInfo
+                    })
+                }).catch(()=>{
+                    window.console.log(123)
+                })
             }).catch(()=>{
                     this.$message({
                     message:'转让组长失败',
@@ -282,6 +290,20 @@ export default {
             }else{
                 return '组员'
             }
+        },
+        rangeMem(arr){
+            let o={};
+            let a=arr.filter(()=>{return true})
+            window.console.log(a)
+            for (let i = 0; i < a.length; i++) {
+                if (a[i].permission == 1) {
+                    o=a[i]
+                    a.splice(i, 1);
+                    break;
+                }
+            }
+            a.unshift(o);
+            return a
         }
     },
     created(){
@@ -315,6 +337,10 @@ export default {
 };
 </script>
 <style scoped>
+
+    .mem-item:nth-child(2){
+        margin-right: 100px;
+    }
 
     .dialog-mem  .el-tag{
         height: 34px;

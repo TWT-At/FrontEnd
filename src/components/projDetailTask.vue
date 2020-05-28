@@ -95,19 +95,14 @@ export default {
             value:'',
             time:'',
             options:[],
-            myPermition:0
+            myPermition:this.$store.getters.projInfo.myPermition
         }
     },
     methods:{
         getOptions(){
             getMemberDatum({project_id:this.$store.getters.projDetailID.id}).then( res=>{
                 this.options=res.data.data
-                res.data.data.forEach(elem=>{
-                    if(elem.user_id==this.$store.getters.userInfo.id){
-                        this.myPermition=1
-                    }
                 })
-            })
         },
         handleSub(){
             switch (this.myPermition){
@@ -344,6 +339,7 @@ export default {
     .item-end{
         color: #A20404;
         font-weight: bold;
+        margin: 0px 8px;
     }
 
     .online-img{
