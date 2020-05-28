@@ -202,7 +202,7 @@ export default {
                         duration:5000
                     })
                     this.data.length=0
-                    //this.$router.go(0)
+                    this.$router.go(0)
                     this.dialogVisible=false
                 }).catch( () =>{
                 loading.close()
@@ -292,7 +292,7 @@ export default {
 
     .create-button:hover{
         cursor: pointer;
-        background:#13283C;
+        background:#012d4f;
     }
 
     .create-button{
@@ -301,7 +301,7 @@ export default {
         border: none;
         width:190px;
         height:48px;
-        background:rgba(59,76,93,1);
+        background:rgba(2,69,122,1);
         box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), 3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px -3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius:24px;
         font-size:24px;
@@ -352,7 +352,7 @@ export default {
     }
 
     .proj-button:hover{
-        background:#13283C;
+        background:#012d4f;
     }
 
     .proj-button{
@@ -360,7 +360,7 @@ export default {
         transition: all .2s;
         width:134px;
         height:36px;
-        background:rgba(59,76,93,1);
+        background:rgba(2,69,122,1);
         box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), 3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px -3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius:18px;
         font-size:18px;

@@ -497,7 +497,7 @@ export default {
     }
 
     .move-head-button:hover{
-        background:#13283C;
+        background:#012d4f;
     }
 
     .move-head-button{
@@ -513,7 +513,7 @@ export default {
     }
 
     .add-button:hover{
-        background:#13283C;
+        background:#012d4f;
     }
 
     .head-button:hover{
@@ -524,7 +524,7 @@ export default {
         transition: all .2s;
         width:72px;
         height:24px;
-        background:rgba(77,91,104,1);
+        background:rgba(2,69,122,1)  ;
         box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1), 3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px -3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius:12px;
         font-size:14px;

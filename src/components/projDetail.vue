@@ -16,7 +16,7 @@
           <div class="des-word">
               项目介绍: <i class="el-icon-edit-outline"></i>
           </div>
-          <button class="my-button des-button">保存</button>
+          <button class="my-button des-button" @click="changeDes()">保存</button>
       </div>
       <el-input
         type="textarea"
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {ShowSpecifiedProject,finsihProject} from '../api/user'
+import {ShowSpecifiedProject,finsihProject,changeProjectDescription} from '../api/user'
 
 export default {
     name:'projDetail',
@@ -52,7 +52,8 @@ export default {
             ID:this.$store.getters.projDetailID,
             ProjDetail: {
                 title:'',
-                member:[]
+                member:[],
+                description:''
             },
         }
     },
@@ -117,6 +118,24 @@ export default {
                 this.$router.push('/main/projMain/project')
                 }
             )
+        },
+        changeDes(){
+            changeProjectDescription({
+                project_id:this.$store.getters.projDetailID.id,
+                description:this.ProjDetail.description
+            }).then(()=>{
+                this.$message({
+                    message:'修改成功',
+                    type:"success",
+                    duration:5000
+                })
+            }).catch(()=>{
+                this.$message({
+                    message:'修改失败',
+                    type:"error",
+                    duration:5000
+                })
+            })
         }
     },
     created(){
@@ -193,7 +212,7 @@ export default {
 
     .my-button:hover{
         cursor: pointer;
-        background:#13283C;
+        background:#012d4f;
     }
 
     .my-button{
@@ -202,7 +221,7 @@ export default {
         border: none;
         width:190px;
         height:48px;
-        background:rgba(59,76,93,1);
+        background:rgba(2,69,122,1);
         box-shadow:3px -3px 5px 0px rgba(0, 0, 0, 0.1), 3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px 3px 5px 0px rgba(0, 0, 0, 0.1), -3px -3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius:24px;
         font-size:24px;

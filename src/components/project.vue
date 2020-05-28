@@ -1,5 +1,5 @@
 <template>
-  <div class="main-box">
+  <div v-loading.fullscreen.lock="loading" class="main-box">
     <div class="main-div">
         <div v-for="(proj,index) in data" :key="index" class="proj-div" v-on:click="handleClick(proj)">
             <el-progress 
@@ -11,7 +11,7 @@
             </el-progress>
             <div class="main-title">
                 {{proj.title}}<br/>
-                <span class="title-span">起始时间：{{proj.created_at.split(" ")[0]}}</span>
+                <span class="title-span">起始时间：{{proj.created_at.split(' ')[0]}}</span>
             </div>
                 <div class="item-main">
                 <div v-if="handleIf(proj.rate)" class="ddl-title">
@@ -24,7 +24,7 @@
                 </div>
                 <div v-if="!handleIf(proj.rate)" class="finish-div">
                     已完结<br/>
-                    <span class="finish-span">完结时间：{{proj.finish_at.split(" ")[0]}}</span>
+                    <span class="finish-span">完结时间：{{proj.finish_at}}</span>
                 </div>
             </div>
         </div>
@@ -39,7 +39,8 @@ export default {
   name: 'project',
   data() {
     return {
-        data:[]
+        data:[],
+        loading:false,
     }
   },
   methods:{
@@ -65,11 +66,13 @@ export default {
         })
     },
     getMyproj(){
+        this.loading=true
         ShowMyProject().then( res=> {
             res.data.data.reverse()
             res.data.data.forEach(elem => {
                 this.data.push(elem[0])
             });
+            this.loading=false
         })
     }
   }

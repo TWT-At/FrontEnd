@@ -275,4 +275,14 @@ export function likeComment(data){
     })
 }
 
+export function changeProjectDescription(data){
+    return request({
+        url:'/api/project/ChangeProjectDescription',
+        method: 'POST',
+        headers: {
+            'action': "manage all projects",
+            },
+        data
+    })
+}
 
