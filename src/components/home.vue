@@ -44,13 +44,13 @@
         <div class="message-main">
             <div class="message-big">
               <div class="message-div">
-                <div class="message-big-title"><el-checkbox v-model="messageBig.checked"></el-checkbox>{{messageBig.type}}{{messageBig.title}}</div>
+                <div class="message-big-title"><el-checkbox v-model="messageBig.checked" :disabled="messageBig.checked"></el-checkbox>{{messageBig.type}}{{messageBig.title}}</div>
                 <div class="message-big-content">{{messageBig.message}}</div>
               </div>
               <div class="time-div">{{messageBig.time}}</div>
             </div>
             <div class="messages" v-for="(message,i) in messages" :key="i">
-              <div class="messages-title"><el-checkbox v-model="message.checked"></el-checkbox>{{message.type}}{{message.title}}</div>
+              <div class="messages-title"><el-checkbox v-model="message.checked" :disabled="message.checked"></el-checkbox>{{message.type}}{{message.title}}</div>
               <div class="messages-time">{{message.time}}</div>
             </div>
             <div class="messages-to-div">
@@ -312,7 +312,7 @@ export default {
     messages:{
       handler(val){
         for(let i=0;i<this.messages.length;i++){
-            if(val[i].checked!=this.messagesCopy[i].checked){
+            if(val[i].checked!=this.messagesCopy[i].checked&&val[i].checked==true){
             UpdateRead({message_id:val[i].id,status:Number(val[i].checked)}).then(()=>{
               this.messagesCopy[i].checked=!this.messagesCopy[i].checked
               if(this.messagesCopy[i].checked==true){
@@ -331,6 +331,18 @@ export default {
 </script>
 
 <style scoped>
+
+    .messages-title >>> .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner::after{
+        border-color: #ffffff!important;
+    }
+
+    .message-div >>> .el-checkbox__input.is-disabled .el-checkbox__inner::after{
+        border-color: #ffffff!important;
+    }
+
+    .message-div >>> .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner::after{
+      border-color: #ffffff!important;
+    }
 
     .messages-to-div{
         width: 100%;

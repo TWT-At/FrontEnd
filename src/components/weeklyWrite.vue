@@ -13,7 +13,7 @@
         </div>
         <div class="des-title">
             以下模板仅供参考，你可以自己决定在周报中记录什么。<br> 文档编辑器采用markdown语法，语法参考请点击：
-            <a target="_blank" href="https://www.runoob.com/markdown/md-tutorial.html">语法参考</a>
+            <a class="md-a" target="_blank" href="https://www.runoob.com/markdown/md-tutorial.html">语法参考</a>
         </div>
         <mavon-editor 
                 v-model="content" 
@@ -167,6 +167,10 @@ export default {
 </script>
 
 <style scoped>
+
+    .md-a{
+        color: #03A3EA;
+    }
 
     .main-box >>> .v-show-content , .scroll-style , .scroll-style-border-radius{
         border-radius: 20px!important;
